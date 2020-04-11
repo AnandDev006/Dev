@@ -1,6 +1,6 @@
-/*
+a /*
     author : Anand
-    FloydWarshall
+    Bellman Ford
 */
 
 #include <bits/stdc++.h>
@@ -24,7 +24,7 @@
 #define present(c, x) ((c).find(x) != (c).end())
 #define cpresent(c, x) (find(all(c), x) != (c).end())
 
-using namespace std;
+    using namespace std;
 
 typedef pair<int, int> pi;
 typedef pair<ll, ll> pl;
@@ -35,14 +35,15 @@ typedef vector<pl> vpl;
 
 const int mod = 1000000007;
 const double zero = 10e-9;
-const int N = 3e3, M = N;
+const int N = 3e5, M = N;
 
 int mpow(int base, int exp);
 void ipgraph(int n, int m);
-void floydWarshall(int n);
+void dijkstra(int x, int n);
 
-int g[N][N];     // adjacency matrix
-int dist[N][N];  // distance matrix
+vpi g[N];
+int parent[N] = {-1};
+int dist[N];
 int DP[N];
 
 int main() {
@@ -55,9 +56,9 @@ int main() {
     int n, m;
     cin >> n >> m;
     ipgraph(n, m);
-    floydWarshall(n);
+    dijkstra(1, n);
     for (int i = 1; i <= n; ++i) {
-        cout << i << " : " << dist[1][i] << '\n';
+        cout << i << " : " << dist[i] << '\n';
     }
     return 0;
 }
@@ -77,30 +78,35 @@ void ipgraph(int n, int m) {
     int i, u, v, w;
     while (m--) {
         cin >> u >> v >> w;
-        g[u][v] = w;
-        g[v][u] = w;
+        g[u].pb({v, w});
+        g[v].pb({u, w});  // undirected
     }
 }
 
-void floydWarshall(int n) {
+void dijkstra(int x, int n) {
+    bool processed[n + 1];
     for (int i = 1; i <= n; ++i) {
-        for (int j = 1; j <= n; ++j) {
-            if (i == j)
-                dist[i][j] = 0;
-            else if (g[i][j] != 0)
-                dist[i][j] = g[i][j];
-            else
-                dist[i][j] = INT_MAX;
-        }
+        processed[i] = false;
+        dist[i] = INT_MAX;
     }
 
-    for (int k = 1; k <= n; ++k) {
-        for (int i = 1; i <= n; ++i) {
-            for (int j = 1; j <= n; ++j) {
-                if (dist[i][k] != INT_MAX && dist[k][j] != INT_MAX && dist[i][j] > dist[i][k] + dist[k][j]) {
-                    dist[i][j] = dist[i][k] + dist[k][j];
-                }
+    priority_queue<pi> q;
+    q.push({0, x});
+    dist[x] = 0;
+
+    while (!q.empty()) {
+        int a = q.top().S;
+        q.pop();
+        if (processed[a]) continue;
+        for (auto v : g[a]) {
+            int b = v.F;
+            int w = v.S;
+            if (dist[a] != INT_MAX && w != INT_MAX && dist[b] > dist[a] + w) {
+                dist[b] = dist[a] + w;
+                parent[b] = a;
+                q.push({-dist[b], b});
             }
         }
+        processed[a] = true;
     }
 }

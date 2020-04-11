@@ -43,7 +43,7 @@
       "const int N = 3e5, M = N;",
       "",
       "int mpow(int base, int exp);",
-      "void ipgraph(int m);",
+      "void ipgraph(int n, int m);",
       "void dfs(int u, int par);",
       "",
       "vector<int> g[N];",

@@ -1,6 +1,6 @@
 /*
     author : Anand
-    FloydWarshall
+    Bellman Ford
 */
 
 #include <bits/stdc++.h>
@@ -35,14 +35,15 @@ typedef vector<pl> vpl;
 
 const int mod = 1000000007;
 const double zero = 10e-9;
-const int N = 3e3, M = N;
+const int N = 3e5, M = N;
 
 int mpow(int base, int exp);
 void ipgraph(int n, int m);
-void floydWarshall(int n);
+void bellmanFord(int x, int n);
 
-int g[N][N];     // adjacency matrix
-int dist[N][N];  // distance matrix
+vector<pair<int, pair<int, int>>> g;  // edgelist
+int dist[N];
+int parent[N] = {-1};
 int DP[N];
 
 int main() {
@@ -55,10 +56,11 @@ int main() {
     int n, m;
     cin >> n >> m;
     ipgraph(n, m);
-    floydWarshall(n);
+    bellmanFord(1, n);
     for (int i = 1; i <= n; ++i) {
-        cout << i << " : " << dist[1][i] << '\n';
+        cout << i << " : " << dist[i] << '\n';
     }
+    return 0;
     return 0;
 }
 
@@ -77,30 +79,36 @@ void ipgraph(int n, int m) {
     int i, u, v, w;
     while (m--) {
         cin >> u >> v >> w;
-        g[u][v] = w;
-        g[v][u] = w;
+        g.pb({w, {u, v}});
+        g.pb({w, {v, u}});  // undirected
     }
 }
 
-void floydWarshall(int n) {
-    for (int i = 1; i <= n; ++i) {
-        for (int j = 1; j <= n; ++j) {
-            if (i == j)
-                dist[i][j] = 0;
-            else if (g[i][j] != 0)
-                dist[i][j] = g[i][j];
-            else
-                dist[i][j] = INT_MAX;
+void bellmanFord(int x, int n) {
+    for (int i = 1; i <= n; ++i) dist[i] = INT_MAX;
+    dist[x] = 0;
+
+    for (int i = 1; i <= n - 1; ++i) {
+        bool flag = false;
+        for (auto e : g) {
+            int w = e.F;
+            int a = e.S.F;
+            int b = e.S.S;
+            if (dist[a] != INT_MAX && w != INT_MAX && dist[b] > dist[a] + w) {
+                dist[b] = dist[a] + w;
+                parent[b] = a;
+                flag = true;
+            }
         }
+        if (!flag) break;
     }
 
-    for (int k = 1; k <= n; ++k) {
-        for (int i = 1; i <= n; ++i) {
-            for (int j = 1; j <= n; ++j) {
-                if (dist[i][k] != INT_MAX && dist[k][j] != INT_MAX && dist[i][j] > dist[i][k] + dist[k][j]) {
-                    dist[i][j] = dist[i][k] + dist[k][j];
-                }
-            }
+    for (auto e : g) {
+        int w = e.F;
+        int a = e.S.F;
+        int b = e.S.S;
+        if (dist[b] > dist[a] + w) {
+            cout << "-ve weight CYCLE detected\n";
         }
     }
 }

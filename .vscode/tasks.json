@@ -7,12 +7,7 @@
       "command": "g++",
       "args": [
         "-std=c++17",
-        "-Wshadow",
-        "-Wall",
         "-g",
-        "-fsanitize=address",
-        "-fsanitize=undefined",
-        "-D_GLIBCXX_DEBUG",
         "${file}",
         "-o",
         "${fileDirname}/${fileBasenameNoExtension}"
@@ -62,6 +57,34 @@
       "type": "shell",
       "label": "cpp build active file",
       "command": "/usr/bin/cpp",
+      "args": [
+        "-g",
+        "${file}",
+        "-o",
+        "${fileDirname}/${fileBasenameNoExtension}"
+      ],
+      "options": {
+        "cwd": "/usr/bin"
+      }
+    },
+    {
+      "type": "shell",
+      "label": "g++ build active file",
+      "command": "/usr/local/bin/g++",
+      "args": [
+        "-g",
+        "${file}",
+        "-o",
+        "${fileDirname}/${fileBasenameNoExtension}"
+      ],
+      "options": {
+        "cwd": "/usr/local/bin"
+      }
+    },
+    {
+      "type": "shell",
+      "label": "clang++ build active file",
+      "command": "/usr/bin/clang++",
       "args": [
         "-g",
         "${file}",

@@ -1,6 +1,6 @@
 /*
     author : Anand
-    FloydWarshall
+    Binary Indexed Tree / Fenwick Tree
 */
 
 #include <bits/stdc++.h>
@@ -35,15 +35,44 @@ typedef vector<pl> vpl;
 
 const int mod = 1000000007;
 const double zero = 10e-9;
-const int N = 3e3, M = N;
+const int N = 3e5, M = N;
 
 int mpow(int base, int exp);
-void ipgraph(int n, int m);
-void floydWarshall(int n);
 
-int g[N][N];     // adjacency matrix
-int dist[N][N];  // distance matrix
-int DP[N];
+template <typename T>
+class BIT {
+    vector<T> tree;
+    int p(int k) { return (k & (-k)); };
+
+   public:
+    BIT(const vector<T>& arr) {
+        int arrLen = sz(arr);
+        this->tree = vector<T>(arrLen + 1, 0);
+        for (int i = 0; i < arrLen; ++i) {
+            updateBIT(arr[i], i);
+        }
+    }
+    void updateBIT(int val, int idx) {
+        ++idx;
+        if (idx >= sz(this->tree)) return;
+
+        while (idx <= sz(this->tree)) {
+            (this->tree)[idx] += val;
+            idx += p(idx);
+        }
+    }
+    T getBITSum(int idx) {
+        ++idx;
+        if (idx >= sz(this->tree)) idx = sz(this->tree) - 1;
+
+        T sum = 0;
+        while (idx > 0) {
+            sum += (this->tree)[idx];
+            idx -= p(idx);
+        }
+        return sum;
+    }
+};
 
 int main() {
 #ifndef ONLINE_JUDGE
@@ -52,13 +81,15 @@ int main() {
 #endif
     ios_base::sync_with_stdio(false);
     cin.tie(0);
-    int n, m;
-    cin >> n >> m;
-    ipgraph(n, m);
-    floydWarshall(n);
-    for (int i = 1; i <= n; ++i) {
-        cout << i << " : " << dist[1][i] << '\n';
-    }
+
+    vi inputArr({1, 2, 3, 4, 5});
+    BIT<int> tree(inputArr);
+    cout << tree.getBITSum(5) << '\n';
+    tree.updateBIT(3, 2);
+    cout << tree.getBITSum(5) << '\n';
+    tree.updateBIT(3, 4);
+    cout << tree.getBITSum(5) << '\n';
+
     return 0;
 }
 
@@ -71,36 +102,4 @@ int mpow(int base, int exp) {
         exp >>= 1;
     }
     return result;
-}
-
-void ipgraph(int n, int m) {
-    int i, u, v, w;
-    while (m--) {
-        cin >> u >> v >> w;
-        g[u][v] = w;
-        g[v][u] = w;
-    }
-}
-
-void floydWarshall(int n) {
-    for (int i = 1; i <= n; ++i) {
-        for (int j = 1; j <= n; ++j) {
-            if (i == j)
-                dist[i][j] = 0;
-            else if (g[i][j] != 0)
-                dist[i][j] = g[i][j];
-            else
-                dist[i][j] = INT_MAX;
-        }
-    }
-
-    for (int k = 1; k <= n; ++k) {
-        for (int i = 1; i <= n; ++i) {
-            for (int j = 1; j <= n; ++j) {
-                if (dist[i][k] != INT_MAX && dist[k][j] != INT_MAX && dist[i][j] > dist[i][k] + dist[k][j]) {
-                    dist[i][j] = dist[i][k] + dist[k][j];
-                }
-            }
-        }
-    }
 }
