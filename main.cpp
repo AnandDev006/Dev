@@ -1,6 +1,6 @@
 /*
     author : Anand
-
+    Topological sort
 */
 
 #include <bits/stdc++.h>
@@ -39,10 +39,12 @@ const int N = 3e5, M = N;
 
 int mpow(int base, int exp);
 void ipgraph(int n, int m);
-void dfs(int u, int par);
+void dfs_topSort(int u, int par);
 
 vector<int> g[N];
 int DP[N];
+stack<int> topSort;
+int parent[N];
 
 int main() {
 #ifndef ONLINE_JUDGE
@@ -51,7 +53,18 @@ int main() {
 #endif
     ios_base::sync_with_stdio(false);
     cin.tie(0);
-
+    int n, m;
+    cin >> n >> m;
+    ipgraph(n,m);
+    for(int i = 1;  i <= n ; ++i) {
+        if(parent[i]) continue;
+        parent[i] = -1;
+        dfs_topSort(i, -1);
+    }
+    while(!topSort.empty()) {
+        cout << topSort.top() << '\n';
+        topSort.pop();
+    }
     return 0;
 }
 
@@ -71,13 +84,14 @@ void ipgraph(int n, int m) {
     while (m--) {
         cin >> u >> v;
         g[u].pb(v);
-        g[v].pb(u);
     }
 }
 
-void dfs(int u, int par) {
+void dfs_topSort(int u, int par) {
     for (int v : g[u]) {
-        if (v == par) continue;
-        dfs(v, u);
+        if (parent[v]) continue;
+        parent[v] = u;
+        dfs_topSort(v, u);
     }
+    topSort.push(u);
 }

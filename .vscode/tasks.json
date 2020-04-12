@@ -1,99 +1,51 @@
 {
-  "version": "2.0.0",
-  "tasks": [
-    {
-      "type": "shell",
-      "label": "build & debug file",
-      "command": "g++",
-      "args": [
-        "-std=c++17",
-        "-g",
-        "${file}",
-        "-o",
-        "${fileDirname}/${fileBasenameNoExtension}"
-      ],
-      "problemMatcher": ["$gcc"],
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      }
-    },
-    {
-      "type": "shell",
-      "label": "build & run file",
-      "command": "g++",
-      "args": [
-        "-std=c++17",
-        "-Wshadow",
-        "-Wall",
-        "-O2",
-        "-Wno-unused-result",
-        "${file}",
-        "-o",
-        "${fileDirname}/${fileBasenameNoExtension}"
-      ],
-      "problemMatcher": ["$gcc"],
-      "group": "build"
-    },
-    {
-      "type": "shell",
-      "label": "cd",
-      "command": "cd",
-      "args": ["${fileDirname}"],
-      "group": "none"
-    },
-    {
-      "type": "shell",
-      "label": "clear",
-      "command": "rm",
-      "args": ["-rf", "main", "main.dSYM"],
-      "group": "none"
-    },
-    {
-      "label": "cleanup",
-      "dependsOn": ["cd", "clear"]
-    },
-    {
-      "type": "shell",
-      "label": "cpp build active file",
-      "command": "/usr/bin/cpp",
-      "args": [
-        "-g",
-        "${file}",
-        "-o",
-        "${fileDirname}/${fileBasenameNoExtension}"
-      ],
-      "options": {
-        "cwd": "/usr/bin"
-      }
-    },
-    {
-      "type": "shell",
-      "label": "g++ build active file",
-      "command": "/usr/local/bin/g++",
-      "args": [
-        "-g",
-        "${file}",
-        "-o",
-        "${fileDirname}/${fileBasenameNoExtension}"
-      ],
-      "options": {
-        "cwd": "/usr/local/bin"
-      }
-    },
-    {
-      "type": "shell",
-      "label": "clang++ build active file",
-      "command": "/usr/bin/clang++",
-      "args": [
-        "-g",
-        "${file}",
-        "-o",
-        "${fileDirname}/${fileBasenameNoExtension}"
-      ],
-      "options": {
-        "cwd": "/usr/bin"
-      }
-    }
-  ]
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "build & debug file",
+            "command": "g++",
+            "args": [
+                "-std=c++17",
+                "-g",
+                "${file}",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}"
+            ],
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "type": "shell",
+            "label": "cd",
+            "command": "cd",
+            "args": [
+                "${fileDirname}"
+            ],
+            "group": "none"
+        },
+        {
+            "type": "shell",
+            "label": "clear",
+            "command": "rm",
+            "args": [
+                "-rf",
+                "main",
+                "main.dSYM"
+            ],
+            "group": "none"
+        },
+        {
+            "label": "cleanup",
+            "dependsOn": [
+                "cd",
+                "clear"
+            ]
+        }
+    ],
+    "version": "2.0.0"
 }
