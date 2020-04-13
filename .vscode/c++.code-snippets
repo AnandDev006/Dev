@@ -38,6 +38,7 @@
       "typedef vector<pi> vpi;",
       "typedef vector<pl> vpl;",
       "",
+      "const int INF = 1e9 + 5;",
       "const int mod = 1000000007;",
       "const double zero = 10e-9;",
       "const int N = 3e5, M = N;",
