@@ -1,6 +1,6 @@
 # Usage
 ```bash
-export CF_CONTEST=https://codeforces.com/contest/1330
+update CONTEST_URL variable in script.js.
 node script.js
 # will parse all the problems of the contest
 # download their testcases

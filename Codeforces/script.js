@@ -2,6 +2,8 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 var fs = require('fs');
 
+const CONTEST_URL = 'https://codeforces.com/contest/1332';
+
 let getTestCaseFromProblemHtml = (dir, html) => {
 
   fs.copyFileSync(`${dir}/../template.cpp`, `${dir}/main.cpp`);
@@ -67,7 +69,7 @@ let getTotalProblemsFromContestHtml = (html) => {
   });
 }
 
-axios.get('https://codeforces.com/contest/1332')
+axios.get(CONTEST_URL)
     .then(response => {
       // console.log(response);
       getTotalProblemsFromContestHtml(response.data);
