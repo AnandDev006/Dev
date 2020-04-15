@@ -57,27 +57,22 @@ void dfs(int u, int par, int depth) {
     for (int v : g[u]) {
         if (v == par) continue;
         dfs(v, u, depth + 1);
-        numOfChildren[u] += numOfChildren[v];
+        numOfChildren[u] += (1 + numOfChildren[v]);
     }
     h[u] = -(depth - numOfChildren[u]);
 }
 
 void solve(int n, int k) {
     dfs(1, -1, 0);
-    sort(h+1, h+n+1);
+    sort(h + 1, h + n + 1);
     int ans = 0;
-    for(int i = 1; i <= k ; ++i) {
+    for (int i = 1; i <= k; ++i) {
         ans += (-h[i]);
     }
     cout << ans << '\n';
 }
 
 int main() {
-
-#ifndef ONLINE_JUDGE
-    freopen("main.2.inp", "r", stdin);
-    freopen("main.2.out", "w", stdout);
-#endif
     ios_base::sync_with_stdio(false);
     cin.tie(0);
 
