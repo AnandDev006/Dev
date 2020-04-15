@@ -38,23 +38,8 @@ const int mod = 1000000007;
 const double zero = 10e-9;
 const int N = 3e5, M = N;
 
-int mpow(int base, int exp);
-void ipgraph(int n, int m);
-void dfs(int u, int par);
-
 vector<int> g[N];
 int DP[N];
-
-int main() {
-#ifndef ONLINE_JUDGE
-    freopen("main.inp", "r", stdin);
-    freopen("main.out", "w", stdout);
-#endif
-    ios_base::sync_with_stdio(false);
-    cin.tie(0);
-    
-    return 0;
-}
 
 int mpow(int base, int exp) {
     base %= mod;
@@ -71,8 +56,8 @@ void ipgraph(int n, int m) {
     int i, u, v;
     while (m--) {
         cin >> u >> v;
-        g[u].pb(v);
-        g[v].pb(u);
+        g[u-1].pb(v-1);
+        g[v-1].pb(u-1);
     }
 }
 
@@ -81,4 +66,11 @@ void dfs(int u, int par) {
         if (v == par) continue;
         dfs(v, u);
     }
+}
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    
+    return 0;
 }
