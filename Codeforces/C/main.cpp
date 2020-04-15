@@ -39,16 +39,53 @@ const double zero = 10e-9;
 const int N = 3e5, M = N;
 
 int mpow(int base, int exp);
-void ipgraph(int n, int m);
-void dfs(int u, int par);
 
 vector<int> g[N];
-int DP[N];
+int h[N];
+int numOfChildren[N];
+
+void ipgraph(int n, int m) {
+    int i, u, v;
+    while (m--) {
+        cin >> u >> v;
+        g[u].pb(v);
+        g[v].pb(u);
+    }
+}
+
+void dfs(int u, int par, int depth) {
+    for (int v : g[u]) {
+        if (v == par) continue;
+        dfs(v, u, depth + 1);
+        numOfChildren[u] += numOfChildren[v];
+    }
+    h[u] = -(depth - numOfChildren[u]);
+}
+
+void solve(int n, int k) {
+    dfs(1, -1, 0);
+    sort(h+1, h+n+1);
+    int ans = 0;
+    for(int i = 1; i <= k ; ++i) {
+        ans += (-h[i]);
+    }
+    cout << ans << '\n';
+}
 
 int main() {
+
+#ifndef ONLINE_JUDGE
+    freopen("main.2.inp", "r", stdin);
+    freopen("main.2.out", "w", stdout);
+#endif
     ios_base::sync_with_stdio(false);
     cin.tie(0);
-    
+
+    int n, k;
+    cin >> n >> k;
+    ipgraph(n, n - 1);
+    solve(n, k);
+
     return 0;
 }
 
@@ -61,20 +98,4 @@ int mpow(int base, int exp) {
         exp >>= 1;
     }
     return result;
-}
-
-void ipgraph(int n, int m) {
-    int i, u, v;
-    while (m--) {
-        cin >> u >> v;
-        g[u].pb(v);
-        g[v].pb(u);
-    }
-}
-
-void dfs(int u, int par) {
-    for (int v : g[u]) {
-        if (v == par) continue;
-        dfs(v, u);
-    }
 }

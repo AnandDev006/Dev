@@ -52,38 +52,7 @@ int main() {
 #endif
     ios_base::sync_with_stdio(false);
     cin.tie(0);
-
-    int n;
-    cin >> n;
-    string s;
-    cin >> s;
-    int cZ, cE, cR, cO, cN;
-    cZ = cE = cR = cO = cN = 0;
-    for (char c : s) {
-        if (c == 'z')
-            ++cZ;
-        if (c == 'e')
-            ++cE;
-        if (c == 'r')
-            ++cR;
-        if (c == 'o')
-            ++cO;
-        if (c == 'n')
-            ++cN;
-    }
-    int num1 = min(cO, min(cN, cE));
-    cO -= num1;
-    cN -= num1;
-    cE -= num1;
-    int num0 = min(cZ, min(cE, min(cR, cO)));
-    string ans = "";
-    for( int i = 0 ; i < num1 ; ++i) {
-        ans += "1 ";
-    }
-    for( int i = 0 ; i < num0 ; ++i) {
-        ans += "0 ";
-    }
-    cout << ans;
+    
     return 0;
 }
 

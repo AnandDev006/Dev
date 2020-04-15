@@ -45,10 +45,28 @@ void dfs(int u, int par);
 vector<int> g[N];
 int DP[N];
 
+void solve() {
+    int x, n, m;
+    cin >> x >> n >> m;
+    while(x > 20 && n > 0) {
+        x = 10 + x/2;
+        --n;
+    }
+    while(m > 0) {
+        x -= 10;
+        --m;
+    }
+    cout << ((x > 0) ? "NO\n" : "YES\n");
+}
+
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(0);
-    
+    int t;
+    cin >> t;
+    while (t--) {
+        solve();
+    }
     return 0;
 }
 
