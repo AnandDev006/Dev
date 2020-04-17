@@ -1,9 +1,11 @@
 /*
     author : Anand
-
+    Binary Lifting Common Ancestors
 */
 
 #include <bits/stdc++.h>
+// #include <math.h>
+
 // #include <iostream>
 // #include <vector>
 // #include <stack>
@@ -48,6 +50,51 @@ const int N = 3e5, M = N;
 vector<int> g[N];
 int DP[N];
 
+int n, l;
+
+int timer;
+vector<int> tin, tout;
+vector<vector<int>> up;
+
+void dfs(int u, int p) {
+    tin[u] = ++timer;
+    up[u][0] = p;
+    for (int i = 1; i <= l; ++i)
+        up[u][i] = up[up[u][i - 1]][i - 1];
+
+    for (int v : g[u]) {
+        if (v != p)
+            dfs(v, u);
+    }
+
+    tout[u] = ++timer;
+}
+
+bool is_ancestor(int u, int v) {
+    return tin[u] <= tin[v] && tout[u] >= tout[v];
+}
+
+int lca(int u, int v) {
+    if (is_ancestor(u, v))
+        return u;
+    if (is_ancestor(v, u))
+        return v;
+    for (int i = l; i >= 0; --i) {
+        if (!is_ancestor(up[u][i], v))
+            u = up[u][i];
+    }
+    return up[u][0];
+}
+
+void preprocess(int root) {
+    tin.resize(n);
+    tout.resize(n);
+    timer = 0;
+    l = ceil(log2(n));
+    up.assign(n, vector<int>(l + 1));
+    dfs(root, root);
+}
+
 int mpow(int base, int exp) {
     base %= mod;
     int result = 1;
@@ -68,20 +115,13 @@ void ipgraph(int n, int m) {
     }
 }
 
-void dfs(int u, int par) {
-    for (int v : g[u]) {
-        if (v == par) continue;
-        dfs(v, u);
-    }
-}
-
 int main() {
-#ifndef ONLINE_JUDGE
-    freopen("main.inp", "r", stdin);
-    freopen("main.out", "w", stdout);
-#endif
+    // #ifndef ONLINE_JUDGE
+    //     freopen("main.inp", "r", stdin);
+    //     freopen("main.out", "w", stdout);
+    // #endif
     ios_base::sync_with_stdio(false);
     cin.tie(0);
-    
+
     return 0;
 }
