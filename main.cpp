@@ -56,8 +56,8 @@ void ipgraph(int n, int m) {
     int i, u, v;
     while (m--) {
         cin >> u >> v;
-        g[u-1].pb(v-1);
-        g[v-1].pb(u-1);
+        g[u - 1].pb(v - 1);
+        g[v - 1].pb(u - 1);
     }
 }
 
@@ -71,6 +71,8 @@ void dfs(int u, int par) {
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(0);
-    
+    int x;
+    cin >> x;
+    cout << 2 * x;
     return 0;
 }

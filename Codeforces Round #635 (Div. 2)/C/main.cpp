@@ -65,7 +65,7 @@ void dfs(int u, int par, int depth) {
 void solve(int n, int k) {
     dfs(1, -1, 0);
     sort(h + 1, h + n + 1);
-    int ans = 0;
+    ll ans = 0;
     for (int i = 1; i <= k; ++i) {
         ans += (-h[i]);
     }
