@@ -2,8 +2,23 @@
     "tasks": [
         {
             "type": "shell",
-            "label": "build & debug file",
+            "label": "g++ build",
             "command": "g++",
+            "args": [
+                "-std=c++17",
+                "-g",
+                "${file}",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}"
+            ],
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "type": "shell",
+            "label": "clang build",
+            "command": "clang++",
             "args": [
                 "-std=c++17",
                 "-g",

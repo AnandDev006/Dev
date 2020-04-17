@@ -1,6 +1,18 @@
 /*
     author : Anand
+    Kosaraju - Strongly connected components
 
+    7 10
+    1 2
+    1 4
+    2 1
+    2 5
+    3 2
+    3 7
+    5 4
+    6 3
+    6 5
+    7 6
 */
 
 #include <bits/stdc++.h>
@@ -46,7 +58,12 @@ const double zero = 10e-9;
 const int N = 3e5, M = N;
 
 vector<int> g[N];
+vector<int> g_rev[N];
+vector<vector<int>> components;
+int numOfComponents;
 int DP[N];
+stack<int> nodes;
+vector<bool> visited(N);
 
 int mpow(int base, int exp) {
     base %= mod;
@@ -64,14 +81,64 @@ void ipgraph(int n, int m) {
     while (m--) {
         cin >> u >> v;
         g[u].pb(v);
-        g[v].pb(u);
+        g_rev[v].pb(u);
     }
 }
 
-void dfs(int u, int par) {
+void dfs1(int u, int par) {
     for (int v : g[u]) {
-        if (v == par) continue;
-        dfs(v, u);
+        if (visited[v]) continue;
+        visited[v] = true;
+        dfs1(v, u);
+    }
+    nodes.push(u);
+}
+
+template <typename T>
+void printArray(const vector<T> &arr) {
+    cout << "[ ";
+    for (ll i = 0; i < sz(arr) - 1; ++i) {
+        cout << arr[i] << ", ";
+    }
+    cout << arr[sz(arr) - 1] << " ]\n";
+}
+
+void dfs2(int u, int par) {
+    for (int v : g_rev[u]) {
+        if (visited[v]) continue;
+        visited[v] = true;
+        components[numOfComponents - 1].push_back(v);
+        dfs2(v, u);
+    }
+}
+
+void kosaraju(int n, int m) {
+    visited.resize(n + 1);
+    fill(all(visited), false);
+    for (int i = 1; i < n; ++i) {
+        if (visited[i]) continue;
+        visited[i] = true;
+        dfs1(i, -1);
+    }
+
+    fill(all(visited), false);
+
+    while (!nodes.empty()) {
+        int node = nodes.top();
+        nodes.pop();
+        if (visited[node])
+            continue;
+
+        visited[node] = true;
+        components.pb({node});
+        ++numOfComponents;
+        dfs2(node, -1);
+    }
+    for (vector<int> comp : components) {
+        for (int node : comp) {
+            cout << node << " ";
+        }
+        cout << '\n';
     }
 }
 
@@ -82,6 +149,10 @@ int main() {
 #endif
     ios_base::sync_with_stdio(false);
     cin.tie(0);
-    
+
+    int n, m;
+    cin >> n >> m;
+    ipgraph(n, m);
+    kosaraju(n, m);
     return 0;
 }

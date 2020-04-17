@@ -5,7 +5,21 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "g++ - Build and debug",
+            "name": "(lldb) Launch",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${fileDirname}/${fileBasenameNoExtension}",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "preLaunchTask": "clang build",
+            "postDebugTask": "cleanup",
+            "MIMode": "lldb"
+        },
+        {
+            "name": "(g++) Launch",
             "type": "cppdbg",
             "request": "launch",
             "program": "${fileDirname}/${fileBasenameNoExtension}",
@@ -22,7 +36,7 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "build & debug file",
+            "preLaunchTask": "g++ build",
             "postDebugTask": "cleanup",
             "miDebuggerPath": "/usr/bin/gdb"
         }
