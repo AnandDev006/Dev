@@ -3,6 +3,10 @@
         "iostream": "cpp",
         "cmath": "cpp",
         "unordered_map": "cpp",
-        "array": "cpp"
+        "array": "cpp",
+        "functional": "cpp",
+        "utility": "cpp",
+        "ostream": "cpp",
+        "unordered_set": "cpp"
     }
 }

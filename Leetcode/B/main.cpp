@@ -17,6 +17,9 @@
 // #include <utility>
 // #include <vector>
 
+#define FIO                           \
+    ios_base::sync_with_stdio(false); \
+    cin.tie(0);
 #define sz(a) int((a).size())
 #define ll long long
 #define si(x) scanf("%d", &x)
@@ -50,34 +53,26 @@ const int mod = 1000000007;
 const double zero = 10e-9;
 const int N = 3e5, M = N;
 
-vector<int> g[N];
-int DP[N];
-
-int mpow(int base, int exp) {
-    base %= mod;
-    int result = 1;
-    while (exp > 0) {
-        if (exp & 1) result = ((ll)result * base) % mod;
-        base = ((ll)base * base) % mod;
-        exp >>= 1;
+int findMinFibonacciNumbers(int k) {
+    vector<int> arr;
+    arr.push_back(1);
+    arr.push_back(1);
+    int pos = 2;
+    while (true) {
+        int next = arr[pos - 1] + arr[pos - 2];
+        if (next > k)
+            break;
+        arr.push_back(next);
+        pos++;
     }
-    return result;
-}
-
-void ipgraph(int n, int m) {
-    int i, u, v;
-    while (m--) {
-        cin >> u >> v;
-        g[u].pb(v);
-        g[v].pb(u);
+    --pos;
+    int count = 0;
+    while (k > 0) {
+        count += (k / arr[pos]);
+        k %= arr[pos];
+        --pos;
     }
-}
-
-void dfs(int u, int par) {
-    for (int v : g[u]) {
-        if (v == par) continue;
-        dfs(v, u);
-    }
+    return count;
 }
 
 int main() {
@@ -85,8 +80,7 @@ int main() {
     //     freopen("main.inp", "r", stdin);
     //     freopen("main.out", "w", stdout);
     // #endif
-    ios_base::sync_with_stdio(false);
-    cin.tie(0);
+    FIO
 
-    return 0;
+        return 0;
 }

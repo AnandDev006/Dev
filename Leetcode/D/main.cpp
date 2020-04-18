@@ -50,34 +50,24 @@ const int mod = 1000000007;
 const double zero = 10e-9;
 const int N = 3e5, M = N;
 
-vector<int> g[N];
-int DP[N];
-
-int mpow(int base, int exp) {
-    base %= mod;
-    int result = 1;
-    while (exp > 0) {
-        if (exp & 1) result = ((ll)result * base) % mod;
-        base = ((ll)base * base) % mod;
-        exp >>= 1;
+int dfs(const string& s, long k, int i, vector<int>& dp) {
+    if (i == s.size()) return 1;  // base case -> Found a valid way
+    if (s[i] == '0') return 0;    // all numbers are in range [1, k] and there are no leading zeros -> So numbers starting with 0 mean invalid!
+    if (dp[i] != -1) return dp[i];
+    int ans = 0;
+    long num = 0;
+    for (int j = i; j < s.size(); j++) {
+        num = num * 10 + s[j] - '0';  // num is the value of the substring s[i..j]
+        if (num > k) break;           // num must be in range [1, k]
+        ans += dfs(s, k, j + 1, dp);
+        ans %= 1000000007;
     }
-    return result;
+    return dp[i] = ans;
 }
 
-void ipgraph(int n, int m) {
-    int i, u, v;
-    while (m--) {
-        cin >> u >> v;
-        g[u].pb(v);
-        g[v].pb(u);
-    }
-}
-
-void dfs(int u, int par) {
-    for (int v : g[u]) {
-        if (v == par) continue;
-        dfs(v, u);
-    }
+int numberOfArrays(string s, int k) {
+    vector<int> dp(s.size(), -1);  // dp[i] is number of ways to print valid arrays from string s start at i
+    return dfs(s, k, 0, dp);
 }
 
 int main() {

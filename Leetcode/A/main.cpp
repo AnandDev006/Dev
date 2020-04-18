@@ -50,33 +50,16 @@ const int mod = 1000000007;
 const double zero = 10e-9;
 const int N = 3e5, M = N;
 
-vector<int> g[N];
-int DP[N];
-
-int mpow(int base, int exp) {
-    base %= mod;
-    int result = 1;
-    while (exp > 0) {
-        if (exp & 1) result = ((ll)result * base) % mod;
-        base = ((ll)base * base) % mod;
-        exp >>= 1;
+int minStartValue(vector<int>& nums) {
+    int minSum = INT_MAX, sum = 0;
+    for (int num : nums) {
+        sum += num;
+        minSum = min(minSum, sum);
     }
-    return result;
-}
-
-void ipgraph(int n, int m) {
-    int i, u, v;
-    while (m--) {
-        cin >> u >> v;
-        g[u].pb(v);
-        g[v].pb(u);
-    }
-}
-
-void dfs(int u, int par) {
-    for (int v : g[u]) {
-        if (v == par) continue;
-        dfs(v, u);
+    if (minSum < 1) {
+        return 1 - minSum;
+    } else {
+        return 1;
     }
 }
 

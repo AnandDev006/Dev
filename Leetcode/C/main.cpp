@@ -50,34 +50,33 @@ const int mod = 1000000007;
 const double zero = 10e-9;
 const int N = 3e5, M = N;
 
-vector<int> g[N];
-int DP[N];
-
-int mpow(int base, int exp) {
-    base %= mod;
-    int result = 1;
-    while (exp > 0) {
-        if (exp & 1) result = ((ll)result * base) % mod;
-        base = ((ll)base * base) % mod;
-        exp >>= 1;
+string getHappyString(int n, int k) {
+    /* 
+            max K for given n
+            since 1st place can be filled in 3 ways and all other spots in 2 ways, 3 * 2 * ... 
+        */
+    if (k > 3 * pow(2, n - 1)) {
+        return "";
     }
-    return result;
-}
 
-void ipgraph(int n, int m) {
-    int i, u, v;
-    while (m--) {
-        cin >> u >> v;
-        g[u].pb(v);
-        g[v].pb(u);
-    }
-}
+    string s;
+    int x = pow(2, n - 1);
+    char c = 'a';
+    int len = 0;
 
-void dfs(int u, int par) {
-    for (int v : g[u]) {
-        if (v == par) continue;
-        dfs(v, u);
+    while (len < n) {
+        int diff = (k - 1) / x;
+        s.push_back((len > 0 && (c + diff) == s[len - 1]) ? (c + diff + 1) : c + diff);
+        ++len;
+        if (c + diff == 'a') {
+            c = 'b';
+        } else {
+            c = 'a';
+        }
+        k -= (diff * x);
+        x /= 2;
     }
+    return s;
 }
 
 int main() {
