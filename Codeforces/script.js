@@ -2,7 +2,7 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 var fs = require('fs');
 
-const CONTEST_URL = 'https://codeforces.com/contest/1337';
+const CONTEST_URL = 'https://codeforces.com/contest/1343';
 
 let getTestCaseFromProblemHtml = (dir, html) => {
 
