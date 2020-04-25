@@ -6,22 +6,12 @@
             "command": "g++",
             "args": [
                 "-std=c++17",
+                "-Wshadow",
                 "-g",
-                "${file}",
-                "-o",
-                "${fileDirname}/${fileBasenameNoExtension}"
-            ],
-            "problemMatcher": [
-                "$gcc"
-            ]
-        },
-        {
-            "type": "shell",
-            "label": "clang build",
-            "command": "clang++",
-            "args": [
-                "-std=c++17",
-                "-g",
+                "-Wall",
+                "-fsanitize=address",
+                "-fsanitize=undefined",
+                "-D_GLIBCXX_DEBUG",
                 "${file}",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}"

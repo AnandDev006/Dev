@@ -1,5 +1,6 @@
 /*
   author : Anand
+  SPARSE TABLE
 */
 
 #include <bits/stdc++.h>
@@ -103,72 +104,66 @@ void debug_out(Head H, Tail... T) {
 const int INF = 1e18 + 5;
 const int MOD = 1000000007;
 
-class SegmentTree {
-    vector<int> tree;
-    int combine(int a, int b) { // as per type
-        return a + b;
-    }
 
-public:
-    SegmentTree(const vector<int> &inputArr) {
-        int inputArrLen = inputArr.size();
-        int treeLen = 4 * inputArrLen;
+const int MAXN = 1e3 + 5;
+int K = 25;
+int N;
 
-        tree = vector<int>(treeLen, 0);  // initialise as per merge operation
-        buildTree(inputArr, 1, 0, inputArrLen - 1);
-    }
+vector<vector<int>> st(MAXN, vector<int>(K + 1, 0));
+vector<int> LOG(MAXN + 1);
 
-    void buildTree(const vector<int> &a, int v, int tl, int tr) {
-        if ( tl == tr) {
-            tree[v] = a[tl];  // as per type
-        } else {
-            int tm = tl + (tr - tl) / 2;
+void precomputeRSQ(const vector<int> &array) {
+    for (int i = 0; i < N; i++)
+        st[i][0] = array[i];
 
-            buildTree(a, v * 2, tl, tm);
-            buildTree(a, v * 2 + 1, tm + 1 , tr);
+    for (int j = 1; j <= K; j++)
+        for (int i = 0; i + (1 << j) <= N; i++)
+            st[i][j] = st[i][j - 1] + st[i + (1 << (j - 1))][j - 1];
+}
 
-            tree[v] = combine(tree[v * 2], tree[v * 2 + 1]);  // as per type
+ll getRSQ(int L, int R) {
+    long long sum = 0;
+    for (int j = K; j >= 0; j--) {
+        if ((1 << j) <= R - L + 1) {
+            sum += st[L][j];
+            L += 1 << j;
         }
     }
+    return sum;
+}
 
-    int getSegTreeData(int v, int tl , int tr, int ql, int qr) {
-        if (tl > qr || tr < ql || ql > qr) return 0;  // as per type
+void preComputeRMQ(const vector<int> &array) {
+    LOG[1] = 0;
+    for (int i = 2; i <= MAXN; i++)
+        LOG[i] = LOG[i / 2] + 1;
 
-        if (ql == tl && qr == tr) {
-            return tree[v];
-        }
+    for (int i = 0; i < N; i++)
+        st[i][0] = array[i];
 
-        int tm = tl + (tr - tl) / 2;
+    for (int j = 1; j <= K; j++)
+        for (int i = 0; i + (1 << j) <= N; i++)
+            st[i][j] = min(st[i][j - 1], st[i + (1 << (j - 1))][j - 1]);
 
-        return combine(getSegTreeData(v * 2, tl, tm, ql, min(qr, tm)),
-                       getSegTreeData(v * 2 + 1, tm + 1, tr, max(ql, tm + 1), qr));  // as per type
-    }
+}
 
-    void updateSegTreeData(int v, int tl, int tr, int pos, int new_val) {
-        if (tl == tr) {
-            tree[v] = new_val;  // as per type
-        } else {
+ll getRMQ(int L, int R) {
+    int j = LOG[R - L + 1];
+    int minimum = min(st[L][j], st[R - (1 << j) + 1][j]);
+    return minimum;
+}
 
-            int tm = tl + (tr - tl) / 2;
-
-            if (pos <= tm)
-                updateSegTreeData(v * 2, tl, tm, pos, new_val);
-            else
-                updateSegTreeData(v * 2 + 1, tm + 1, tr, pos, new_val);
-
-            tree[v] = combine(tree[v * 2] , tree[v * 2 + 1]);  // as per type
-        }
-    }
-};
 
 signed main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(0);
+    cin.tie(nullptr);
+    std::ios::sync_with_stdio(false);
 
-    vector<int> inputArr({5, 8, 6, 3, 2, 7, 2, 6, 9});
-    SegmentTree tree(inputArr);
-    cout << tree.getSegTreeData(1, 0, inputArr.size() - 1, 7, 8) << '\n';
-    tree.updateSegTreeData(1, 0, inputArr.size() - 1, 7, 0);
-    cout << tree.getSegTreeData(1, 0, inputArr.size() - 1, 7, 8) << '\n';
+    vector<int> inp({1, 2, 3, 4, 5, 6, 7, 8, 9});
+    N = inp.size();
+    K = log2(N) + 1;
+
+    // precomputeRSQ(inp);
+    preComputeRMQ(inp);
+    cout << getRMQ(2, 6) << endl;
+
     return 0;
 }
