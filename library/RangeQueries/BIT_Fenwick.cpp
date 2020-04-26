@@ -1,43 +1,107 @@
 /*
-    author : Anand
-    Binary Indexed Tree / Fenwick Tree
+  author : Anand
 */
 
 #include <bits/stdc++.h>
 
-#define sz(a) int((a).size())
-#define ll long long
-#define si(x) scanf("%d", &x)
-#define sl(x) scanf("%lld", &x)
-#define ss(s) scanf("%s", s)
-#define pi(x) printf("%d\n", x)
-#define pl(x) printf("%lld\n", x)
-#define ps(s) printf("%s\n", s)
-#define pb push_back
-#define mp(a, b) make_pair(ll(a), ll(b))
-#define F first
-#define S second
-#define all(c) (c).begin(), (c).end()
-#define clr(x) memset(x, 0, sizeof(x))
-#define sortall(x) sort(all(x))
-#define PI 3.1415926535897932384626
-#define present(c, x) ((c).find(x) != (c).end())
-#define cpresent(c, x) (find(all(c), x) != (c).end())
-
 using namespace std;
 
-typedef pair<int, int> pi;
-typedef pair<ll, ll> pl;
-typedef vector<int> vi;
-typedef vector<ll> vl;
-typedef vector<pi> vpi;
-typedef vector<pl> vpl;
+#define PI 3.1415926535897932384626
+#define int long long
+#define ll long long
 
-const int mod = 1000000007;
-const double zero = 10e-9;
-const int N = 3e5, M = N;
+template <typename A, typename B>
+string to_string(pair<A, B> p);
 
-int mpow(int base, int exp);
+template <typename A, typename B, typename C>
+string to_string(tuple<A, B, C> p);
+
+template <typename A, typename B, typename C, typename D>
+string to_string(tuple<A, B, C, D> p);
+
+string to_string(const string& s) {
+    return '"' + s + '"';
+}
+
+string to_string(const char* s) {
+    return to_string((string)s);
+}
+
+string to_string(bool b) {
+    return (b ? "true" : "false");
+}
+
+string to_string(vector<bool> v) {
+    bool first = true;
+    string res = "{";
+    for (int i = 0; i < static_cast<int>(v.size()); i++) {
+        if (!first) {
+            res += ", ";
+        }
+        first = false;
+        res += to_string(v[i]);
+    }
+    res += "}";
+    return res;
+}
+
+template <size_t N>
+string to_string(bitset<N> v) {
+    string res = "";
+    for (size_t i = 0; i < N; i++) {
+        res += static_cast<char>('0' + v[i]);
+    }
+    return res;
+}
+
+template <typename A>
+string to_string(A v) {
+    bool first = true;
+    string res = "{";
+    for (const auto& x : v) {
+        if (!first) {
+            res += ", ";
+        }
+        first = false;
+        res += to_string(x);
+    }
+    res += "}";
+    return res;
+}
+
+template <typename A, typename B>
+string to_string(pair<A, B> p) {
+    return "(" + to_string(p.first) + ", " + to_string(p.second) + ")";
+}
+
+template <typename A, typename B, typename C>
+string to_string(tuple<A, B, C> p) {
+    return "(" + to_string(get<0>(p)) + ", " + to_string(get<1>(p)) + ", " + to_string(get<2>(p)) + ")";
+}
+
+template <typename A, typename B, typename C, typename D>
+string to_string(tuple<A, B, C, D> p) {
+    return "(" + to_string(get<0>(p)) + ", " + to_string(get<1>(p)) + ", " + to_string(get<2>(p)) + ", " + to_string(get<3>(p)) + ")";
+}
+
+void debug_out() { cerr << endl; }
+
+template <typename Head, typename... Tail>
+void debug_out(Head H, Tail... T) {
+    cerr << " " << to_string(H);
+    debug_out(T...);
+}
+
+// #define LOCAL
+
+#ifdef LOCAL
+#define debug(...) cerr << "[" << #__VA_ARGS__ << "]:", debug_out(__VA_ARGS__)
+#else
+#define debug(...) 42
+#endif
+
+const int INF = 1e18 + 5;
+const int MOD = 1000000007;
 
 template <typename T>
 class BIT {
@@ -47,59 +111,47 @@ class BIT {
    public:
     BIT(const vector<T>& arr) {
         int arrLen = sz(arr);
-        this->tree = vector<T>(arrLen + 1, 0);
+        tree = vector<T>(arrLen + 1, 0);
         for (int i = 0; i < arrLen; ++i) {
             updateBIT(arr[i], i);
         }
     }
+
     void updateBIT(int val, int idx) {
         ++idx;
-        if (idx >= sz(this->tree)) return;
+        if (idx >= sz(tree)) return;
 
-        while (idx <= sz(this->tree)) {
-            (this->tree)[idx] += val;
+        while (idx <= sz(tree)) {
+            (tree)[idx] += val;
             idx += p(idx);
         }
     }
+
+    void updateBIT(int l, int r, int val) {
+        updateBIT(l, val);
+        updateBIT(r + 1, -val);
+    }
+
     T getBITSum(int idx) {
         ++idx;
-        if (idx >= sz(this->tree)) idx = sz(this->tree) - 1;
+        if (idx >= sz(tree)) idx = sz(tree) - 1;
 
         T sum = 0;
         while (idx > 0) {
-            sum += (this->tree)[idx];
+            sum += (tree)[idx];
             idx -= p(idx);
         }
         return sum;
     }
+
+    T getBITSum(int l, int r) {
+        return getBITSum(r) - getBITSum(l - 1);
+    }
 };
 
-int main() {
-#ifndef ONLINE_JUDGE
-    freopen("main.inp", "r", stdin);
-    freopen("main.out", "w", stdout);
-#endif
-    ios_base::sync_with_stdio(false);
-    cin.tie(0);
-
-    vi inputArr({1, 2, 3, 4, 5});
-    BIT<int> tree(inputArr);
-    cout << tree.getBITSum(5) << '\n';
-    tree.updateBIT(3, 2);
-    cout << tree.getBITSum(5) << '\n';
-    tree.updateBIT(3, 4);
-    cout << tree.getBITSum(5) << '\n';
+signed main() {
+    cin.tie(nullptr);
+    std::ios::sync_with_stdio(false);
 
     return 0;
-}
-
-int mpow(int base, int exp) {
-    base %= mod;
-    int result = 1;
-    while (exp > 0) {
-        if (exp & 1) result = ((ll)result * base) % mod;
-        base = ((ll)base * base) % mod;
-        exp >>= 1;
-    }
-    return result;
 }

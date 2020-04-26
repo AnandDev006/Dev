@@ -1,120 +1,156 @@
 /*
-    author : Anand
-    MST Kruksal
+  author : Anand
 */
 
 #include <bits/stdc++.h>
 
-#define sz(a) int((a).size())
-#define ll long long
-#define si(x) scanf("%d", &x)
-#define sl(x) scanf("%lld", &x)
-#define ss(s) scanf("%s", s)
-#define pi(x) printf("%d\n", x)
-#define pl(x) printf("%lld\n", x)
-#define ps(s) printf("%s\n", s)
-#define pb push_back
-#define mp(a, b) make_pair(ll(a), ll(b))
-#define F first
-#define S second
-#define all(c) (c).begin(), (c).end()
-#define clr(x) memset(x, 0, sizeof(x))
-#define sortall(x) sort(all(x))
-#define PI 3.1415926535897932384626
-#define present(c, x) ((c).find(x) != (c).end())
-#define cpresent(c, x) (find(all(c), x) != (c).end())
-
 using namespace std;
 
-typedef pair<int, int> pi;
-typedef pair<ll, ll> pl;
-typedef vector<int> vi;
-typedef vector<ll> vl;
-typedef vector<pi> vpi;
-typedef vector<pl> vpl;
+#define PI 3.1415926535897932384626
+#define int long long
+#define ll long long
 
-const int mod = 1000000007;
-const double zero = 10e-9;
-const int N = 3e5, M = N;
+template <typename A, typename B>
+string to_string(pair<A, B> p);
 
-int mpow(int base, int exp);
-void ipgraph(int n, int m);
+template <typename A, typename B, typename C>
+string to_string(tuple<A, B, C> p);
 
-vector<pair<int, pi>> g; // edgeList
-vector<pair<int, pi>> MST; // edgeList
-int DP[N];
-int link[N];
-int set_size[N];
+template <typename A, typename B, typename C, typename D>
+string to_string(tuple<A, B, C, D> p);
 
-void initUnionFindSet(int n) {
-    for( int i = 1 ; i <= n ; ++i ) {
-        link[i] = i;
-        set_size[i] = 1;
+string to_string(const string& s) {
+    return '"' + s + '"';
+}
+
+string to_string(const char* s) {
+    return to_string((string)s);
+}
+
+string to_string(bool b) {
+    return (b ? "true" : "false");
+}
+
+string to_string(vector<bool> v) {
+    bool first = true;
+    string res = "{";
+    for (int i = 0; i < static_cast<int>(v.size()); i++) {
+        if (!first) {
+            res += ", ";
+        }
+        first = false;
+        res += to_string(v[i]);
     }
+    res += "}";
+    return res;
 }
 
-int find(int x) {
-    while( x != link[x]) x = link[x];
-    return x;
+template <size_t N>
+string to_string(bitset<N> v) {
+    string res = "";
+    for (size_t i = 0; i < N; i++) {
+        res += static_cast<char>('0' + v[i]);
+    }
+    return res;
 }
 
-int same(int a, int b) {
-    return find(a) == find(b);
+template <typename A>
+string to_string(A v) {
+    bool first = true;
+    string res = "{";
+    for (const auto& x : v) {
+        if (!first) {
+            res += ", ";
+        }
+        first = false;
+        res += to_string(x);
+    }
+    res += "}";
+    return res;
 }
 
-void unite(int a, int b) {
-    a = find(a);
-    b = find(b);
-    if(set_size[a] < set_size[b]) swap(a,b);
-    set_size[a] += set_size[b];
-    link[b] = a;
+template <typename A, typename B>
+string to_string(pair<A, B> p) {
+    return "(" + to_string(p.firstirst) + ", " + to_string(p.secondecond) + ")";
+}
+
+template <typename A, typename B, typename C>
+string to_string(tuple<A, B, C> p) {
+    return "(" + to_string(get<0>(p)) + ", " + to_string(get<1>(p)) + ", " + to_string(get<2>(p)) + ")";
+}
+
+template <typename A, typename B, typename C, typename D>
+string to_string(tuple<A, B, C, D> p) {
+    return "(" + to_string(get<0>(p)) + ", " + to_string(get<1>(p)) + ", " + to_string(get<2>(p)) + ", " + to_string(get<3>(p)) + ")";
+}
+
+void debug_out() { cerr << endl; }
+
+template <typename Head, typename... Tail>
+void debug_out(Head H, Tail... T) {
+    cerr << " " << to_string(H);
+    debug_out(T...);
+}
+
+// #define LOCAL
+
+#ifdef LOCAL
+#define debug(...) cerr << "[" << #__VA_ARGS__ << "]:", debug_out(__VA_ARGS__)
+#else
+#define debug(...) 42
+#endif
+
+const int INF = 1e18 + 5;
+const int MOD = 1000000007;
+
+vector<pair<int, pair<int, int>>> g;    // edgeList
+vector<pair<int, pair<int, int>>> MST;  // edgeList
+
+vector<int> parent;
+vector<int> rnk;
+
+void makeSet(int v) {
+    parent[v] = v;
+    rnk[v] = 0;
+}
+
+int find_set(int v) {
+    if (v == parent[v])
+        return v;
+    return (parent[v] = find_set(parent[v]));
+}
+
+bool union_sets(int a, int b) {
+    a = find_set(a);
+    b = find_set(b);
+    if (a != b) {
+        if (rnk[a] < rnk[b])
+            swap(a, b);
+        parent[b] = a;
+        if (rnk[a] == rnk[b]) rnk[a]++;
+        return true;
+    }
+    return false;
 }
 
 void kruksal(int m) {
-    sort(g.begin(), g.begin() + m, [](pair<int, pi> a, pair<int, pi> b) { return a.F < b.F; });
-    for( auto e : g) {
-        int a = e.S.F;
-        int b = e.S.S;
-        int w = e.F;
-        if (!same(a, b)) {
-            unite(a, b);
-            MST.pb({w, {a, b}});
+    sort(g.begin(), g.begin() + m, [](pair<int, pair<int, int>> a, pair<int, pair<int, int>> b) { return a.first < b.first; });
+    for (auto e : g) {
+        int a = e.second.first;
+        int b = e.second.second;
+        int w = e.first;
+        if (union_sets(a, b)) {
+            MST.push_back({w, {a, b}});
         }
     }
 }
 
-int main() {
-#ifndef ONLINE_JUDGE
-    freopen("main.inp", "r", stdin);
-    freopen("main.out", "w", stdout);
-#endif
-    ios_base::sync_with_stdio(false);
-    cin.tie(0);
-
-    int n, m;
-    cin >> n >> m;
-    ipgraph(n, m);
-    initUnionFindSet(n);
-    kruksal(m);
-    for( auto e : MST) {
-        int a = e.S.F;
-        int b = e.S.S;
-        int w = e.F;
-        printf("%d-%d : %d\n", a, b, w);
+void initUnionFindSet(int n) {
+    parent = vector<int>(n);
+    rnk = vector<int>(n);
+    for (int i = 1; i <= n; ++i) {
+        makeSet(i);
     }
-    return 0;
-}
-
-int mpow(int base, int exp) {
-    base %= mod;
-    int result = 1;
-    while (exp > 0) {
-        if (exp & 1)
-            result = ((ll)result * base) % mod;
-        base = ((ll)base * base) % mod;
-        exp >>= 1;
-    }
-    return result;
 }
 
 void ipgraph(int n, int m) {
@@ -123,4 +159,24 @@ void ipgraph(int n, int m) {
         cin >> u >> v >> w;
         g.push_back({w, {u, v}});
     }
+}
+
+signed main() {
+    cin.tie(nullptr);
+    std::ios::sync_with_stdio(false);
+
+    int n, m;
+    cin >> n >> m;
+    ipgraph(n, m);
+    initUnionFindSet(n);
+    kruksal(m);
+    for (auto e : MST) {
+        int a = e.second.first;
+        int b = e.second.second;
+        int w = e.first;
+        printf("%d-%d : %d\n", a, b, w);
+    }
+    return 0;
+
+    return 0;
 }

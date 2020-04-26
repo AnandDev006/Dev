@@ -92,9 +92,7 @@ void debug_out(Head H, Tail... T) {
 	debug_out(T...);
 }
 
-// #define LOCAL
-
-#ifdef LOCAL
+#ifndef ONLINE_JUDGE
 #define debug(...) cerr << "[" << #__VA_ARGS__ << "]:", debug_out(__VA_ARGS__)
 #else
 #define debug(...) 42
