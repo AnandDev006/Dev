@@ -102,73 +102,61 @@ void debug_out(Head H, Tail... T) {
 
 const int INF = 1e18 + 5;
 const int MOD = 1000000007;
+const int ALPHABET_SIZE = 26;
 
-
-vector<int> tree;
-
-int combine(int a, int b) { // TODO
-    return a + b;
-}
-
-void buildTree(const vector<int> &a, int v, int tl, int tr) {
-    if ( tl == tr) {
-        tree[v] = a[tl];  // TODO
-    } else {
-        int tm = tl + (tr - tl) / 2;
-
-        buildTree(a, v * 2, tl, tm);
-        buildTree(a, v * 2 + 1, tm + 1 , tr);
-
-        tree[v] = combine(tree[v * 2], tree[v * 2 + 1]);  // TODO
+struct TrieNode {
+    vector<TrieNode*> children;
+    bool isEndOfWord;
+    TrieNode() {
+        children = vector<TrieNode*>(ALPHABET_SIZE);
     }
+};
+
+TrieNode* getNode(void) {
+    struct TrieNode *pNode =  new TrieNode;
+
+    pNode->isEndOfWord = false;
+
+    for (int i = 0; i < ALPHABET_SIZE; i++)
+        pNode->children[i] = NULL;
+
+    return pNode;
 }
 
-int getSegTreeData(int v, int tl , int tr, int ql, int qr) {
-    if (tl > qr || tr < ql || ql > qr) return 0;  // TODO
+void insert(struct TrieNode *root, string key) {
+    TrieNode *cur = root;
 
-    if (ql == tl && qr == tr) {
-        return tree[v];
+    for (int i = 0; i < (int)key.length(); i++) {
+        int index = key[i] - 'a';
+        if (!cur->children[index])
+            cur->children[index] = getNode();
+
+        cur = cur->children[index];
     }
 
-    int tm = tl + (tr - tl) / 2;
-
-    int val = combine(getSegTreeData(v * 2, tl, tm, ql, min(qr, tm)),
-                   getSegTreeData(v * 2 + 1, tm + 1, tr, max(ql, tm + 1), qr));  // TODO
-    return val;
+    // mark last node as leaf
+    cur->isEndOfWord = true;
 }
 
-void updateSegTreeData(int v, int tl, int tr, int pos, int new_val) {
-    if (tl == tr) {
-        tree[v] = new_val;  // TODO
-    } else {
+bool search(struct TrieNode *root, string key) {
+    struct TrieNode *cur = root;
 
-        int tm = tl + (tr - tl) / 2;
+    for (int i = 0; i < (int)key.length(); i++) {
+        int index = key[i] - 'a';
+        if (!cur->children[index])
+            return false;
 
-        if (pos <= tm)
-            updateSegTreeData(v * 2, tl, tm, pos, new_val);
-        else
-            updateSegTreeData(v * 2 + 1, tm + 1, tr, pos, new_val);
-
-        tree[v] = combine(tree[v * 2] , tree[v * 2 + 1]);  // TODO
+        cur = cur->children[index];
     }
-}
 
+    return (cur != NULL && cur->isEndOfWord);
+}
 
 signed main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(0);
-
-    vector<int> inputArr({5, 8, 6, 3, 2, 7, 2, 6, 9});
-    int n = inputArr.size();
-
-    tree = vector<int>(4 * n, 0); // TODO
-
-    buildTree(inputArr, 1, 0, n - 1);
+    cin.tie(nullptr);
+    std::ios::sync_with_stdio(false);
 
 
-    cout << getSegTreeData(1, 0, inputArr.size() - 1, 7, 8) << '\n';
-    updateSegTreeData(1, 0, inputArr.size() - 1, 7, 0);
-    cout << getSegTreeData(1, 0, inputArr.size() - 1, 7, 8) << '\n';
-    
+
     return 0;
 }
