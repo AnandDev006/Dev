@@ -157,9 +157,6 @@ signed main() {
         else {
             cout << c << "\n";
             for (auto& v : ans) {
-                debug(v);
-                sort(v.begin(), v.end());
-                debug(v);
                 cout << v[0] << " " << v[1] << " " << v[2] << '\n';
             }
         }
