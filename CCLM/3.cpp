@@ -139,9 +139,7 @@ signed main() {
         for (int i = 1; i <= n - 2; ++i) {
             if (a[i] == i) continue;
             int v1 = i, v3 = p[v1], v2 = p[v3];
-            vector<int> v({v1, v2, v3});
-            sort(v.begin(), v.end());
-            ans.push_back(v);
+            ans.push_back({v1, v2, v3});
             int temp = a[v3];
             a[v3] = a[v2];
             a[v2] = a[v1];
@@ -159,6 +157,9 @@ signed main() {
         else {
             cout << c << "\n";
             for (auto& v : ans) {
+                debug(v);
+                sort(v.begin(), v.end());
+                debug(v);
                 cout << v[0] << " " << v[1] << " " << v[2] << '\n';
             }
         }
