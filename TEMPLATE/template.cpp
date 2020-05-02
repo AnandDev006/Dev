@@ -93,7 +93,7 @@ void debug_out(Head H, Tail... T) {
 }
 
 #ifndef ONLINE_JUDGE
-#define debug(...) cerr << "[" << #__VA_ARGS__ << "]:", debug_out(__VA_ARGS__)
+#define debug(...) cerr << "\t[" << #__VA_ARGS__ << "]:", debug_out(__VA_ARGS__)
 #else
 #define debug(...) 42
 #endif
@@ -101,6 +101,7 @@ void debug_out(Head H, Tail... T) {
 const int INF = 1e18 + 5;
 const int MOD = 1000000007;
 
+//////////////////////////////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 signed main() {
 	cin.tie(nullptr);

@@ -1,56 +1,45 @@
 {
-    "tasks": [
-        {
-            "type": "shell",
-            "label": "g++ build",
-            "command": "g++",
-            "args": [
-                "-std=c++17",
-                "-Wshadow",
-                "-g",
-                "-Wall",
-                "-fsanitize=address",
-                "-fsanitize=undefined",
-                "-D_GLIBCXX_DEBUG",
-                "${file}",
-                "-o",
-                "${fileDirname}/${fileBasenameNoExtension}"
-            ],
-            "problemMatcher": [
-                "$gcc"
-            ],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
-        },
-        {
-            "type": "shell",
-            "label": "cd",
-            "command": "cd",
-            "args": [
-                "${fileDirname}"
-            ],
-            "group": "none"
-        },
-        {
-            "type": "shell",
-            "label": "clear",
-            "command": "rm",
-            "args": [
-                "-rf",
-                "main",
-                "main.dSYM"
-            ],
-            "group": "none"
-        },
-        {
-            "label": "cleanup",
-            "dependsOn": [
-                "cd",
-                "clear"
-            ]
-        }
-    ],
-    "version": "2.0.0"
+  "tasks": [
+    {
+      "type": "shell",
+      "label": "g++ build",
+      "command": "g++",
+      "args": [
+        "-std=c++17",
+        "-Wshadow",
+        "-g",
+        "-Wall",
+        "-fsanitize=address",
+        "-fsanitize=undefined",
+        "-D_GLIBCXX_DEBUG",
+        "${file}",
+        "-o",
+        "${fileDirname}/${fileBasenameNoExtension}"
+      ],
+      "problemMatcher": ["$gcc"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "type": "shell",
+      "label": "cd",
+      "command": "cd",
+      "args": ["${fileDirname}"],
+      "group": "none"
+    },
+    {
+      "type": "shell",
+      "label": "clear",
+      "command": "rm",
+      "args": ["-rf", "main", "main.dSYM"],
+      "group": "none"
+    },
+    {
+      "label": "cleanup",
+      "dependsOn": ["cd", "clear"]
+    }
+  ],
+  "version": "2.0.0"
 }
