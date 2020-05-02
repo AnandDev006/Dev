@@ -135,7 +135,7 @@ signed main() {
         }
         int c = 0;
         debug(a, p, c);
-        vector<tuple<int, int, int>> ans;
+        vector<vector<int>> ans;
         for (int i = 1; i <= n - 2; ++i) {
             if (a[i] == i) continue;
             int v1 = i, v3 = p[v1], v2 = p[v3];
@@ -156,10 +156,11 @@ signed main() {
             cout << "-1\n";
         else {
             cout << c << "\n";
-            for (auto v : ans) {
-                int x, y, z;
-                tie(x, y, z) = v;
-                cout << x << " " << y << " " << z << '\n';
+            for (auto& v : ans) {
+                debug(v);
+                sort(v.begin(), v.end());
+                debug(v);
+                cout << v[0] << " " << v[1] << " " << v[2] << '\n';
             }
         }
     }
