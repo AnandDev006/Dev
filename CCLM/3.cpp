@@ -103,6 +103,13 @@ const int MOD = 1000000007;
 
 //////////////////////////////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
+bool isSorted(const vector<int> &a) {
+    for (int i = 1 ;  i < (int)a.size() ; ++i) {
+        if (a[i] != i) return false;
+    }
+    return true;
+}
+
 signed main() {
     cin.tie(nullptr);
     std::ios::sync_with_stdio(false);
@@ -110,21 +117,19 @@ signed main() {
     /*
 
     1 2 3 4 5 6
-    1 6 3 2 5 4
-    1 6 4 2 3 5
-    4 1 6 2 3 5
+    1 3 4 2 5 6
+    4 3 6 2 5 1
+    4 3 2 5 6 1
+    2 3 1 5 6 4
 
-    2 4 5 1 6 3
-
-    4 1 6 2 3 5
-    1 2 6 4 3 5
-    1 2 3 4 5 6
+    3 1 2 6 4 5
 
 
     */
 
     int t;
     cin >> t;
+    int pass = 0, fail = 0;
     while (t--) {
         int n, k;
         cin >> n >> k;
@@ -134,11 +139,11 @@ signed main() {
             p[a[i]] = i;
         }
         int c = 0;
-        debug(a, p, c);
         vector<vector<int>> ans;
         for (int i = 1; i <= n - 2; ++i) {
             if (a[i] == i) continue;
             int v1 = i, v3 = p[v1], v2 = p[v3];
+            if (v1 == v2 || v2 == v3 || v1 == v3) c = k + 1;
             ans.push_back({v1, v2, v3});
             int temp = a[v3];
             a[v3] = a[v2];
@@ -148,19 +153,25 @@ signed main() {
             p[a[v2]] = v2;
             p[a[v3]] = v3;
             c++;
-            debug(a, p, c);
             if (c > k) break;
         }
 
-        if (c > k || a[n] != n || a[n - 1] != n - 1)
-            cout << "-1\n";
-        else {
-            cout << c << "\n";
-            for (auto& v : ans) {
-                cout << v[0] << " " << v[1] << " " << v[2] << '\n';
-            }
+        // if (!isSorted(a) || c > k)
+        //  cout << "-1\n";
+        // else {
+        //  cout << c << "\n";
+        //  for (auto& v : ans) {
+        //      cout << v[0] << " " << v[1] << " " << v[2] << '\n';
+        //  }
+        // }
+        if (isSorted(a) || c > k) {
+            pass++;
+        } else {
+            debug(a, c, k, n);
+            fail++;
         }
     }
+    cout << "\t pass : " << pass << "     fail : " << fail << "\n";
 
     return 0;
 }
