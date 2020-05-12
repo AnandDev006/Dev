@@ -2,6 +2,26 @@
   "tasks": [
     {
       "type": "shell",
+      "label": "run",
+      "command": "g++",
+      "args": [
+        "-std=c++17",
+        "-Wshadow",
+        "-Wall",
+        "-O2",
+        "-Wno-unused-result",
+        "${file}",
+        "-o",
+        "${fileDirname}/${fileBasenameNoExtension}"
+      ],
+      "problemMatcher": ["$gcc"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "type": "shell",
       "label": "g++ build",
       "command": "g++",
       "args": [
@@ -17,10 +37,6 @@
         "${fileDirname}/${fileBasenameNoExtension}"
       ],
       "problemMatcher": ["$gcc"],
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      }
     },
     {
       "type": "shell",
