@@ -1,0 +1,192 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  line-height: 1.3;
+  color: #6f737f;
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  text-decoration: none;
+  display: block;
+  margin: 0;
+}
+
+h1,
+h2 {
+  margin: 0;
+  font-family: 'Oswald', sans-serif;
+  line-height: 1.1;
+}
+
+.container {
+  width: 85%;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+.btn {
+  background-color: #a59678;
+  display: inline-block;
+  padding: 0.5em 1.5em;
+  border-radius: 100px;
+  color: #fff;
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+}
+
+section {
+  padding: 5em 0;
+}
+
+.hero {
+  background-color: #3b4050;
+  text-align: center;
+  padding: 4em 0;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+}
+
+.hero__title {
+  font-size: 3rem;
+  line-height: 1.1;
+  color: #fff;
+}
+
+.hero__title__dark {
+  color: #a59678;
+}
+
+.hero__text {
+  font-size: 1.5rem;
+}
+
+.hero__btn {
+  margin-top: 1em;
+}
+
+.section-one {
+  text-align: center;
+}
+
+.section__title {
+  font-size: 1.875rem;
+  color: #a59678;
+}
+
+.section__title__large {
+  font-size: 2.25rem;
+}
+
+.section__text {
+  font-size: 1.125rem;
+}
+
+.section__text__large {
+  font-size: 1.3125rem;
+}
+
+.primary-content {
+  margin-bottom: 2em;
+}
+
+.aside-content__card {
+  background-color: #3b4050;
+  padding: 2em;
+  margin-bottom: 1em;
+  text-align: center;
+}
+
+.aside-content__title {
+  color: #fff;
+}
+
+.footer {
+  background-color: #3b4050;
+  padding-top: 4em;
+  text-align: center;
+}
+
+.footer__title {
+  color: #fff;
+  text-align: center;
+}
+
+.footer__content__title {
+  font-size: 1.3125rem;
+}
+
+.footer__content__text {
+  font-size: 1rem;
+  margin-top: 1em;
+}
+
+.footer__links {
+  color: #6f737f;
+}
+
+.footer .col {
+  margin-bottom: 2em;
+}
+
+@media (min-width: 700px) {
+  .aside-content,
+  .footer__content {
+    display: flex;
+  }
+
+  .aside-content__card {
+    width: 100%;
+  }
+
+  .aside-content__card + .aside-content__card {
+    margin-left: 2em;
+  }
+
+  .footer {
+    text-align: left;
+  }
+
+  .footer__content :first-child {
+    width: 45%;
+  }
+
+  .footer__content > * {
+    width: 15%;
+  }
+
+  .col + .col {
+    margin-left: 2em;
+  }
+}
+
+@media (min-width: 1000px) {
+  .row {
+    display: flex;
+  }
+
+  .primary-content {
+    width: 65%;
+  }
+
+  .aside-content {
+    display: block;
+    margin-left: 2em;
+    width: 30%;
+  }
+
+  .aside-content__card + .aside-content__card {
+    margin-left: 0;
+  }
+}

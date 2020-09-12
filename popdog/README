@@ -1,0 +1,3 @@
+PLAYLIST : https://www.youtube.com/playlist?list=PL4-IK0AVhVjPed_39KZb8mI_iGRyvTfpS
+
+youtube-dl -o "%(playlist_index)s-%(title)s.%(ext)s" https://www.youtube.com/playlist?list=PL4-IK0AVhVjPed_39KZb8mI_iGRyvTfpS -f 247
