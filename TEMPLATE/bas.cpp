@@ -20,18 +20,18 @@ const int INF = 1e18 + 5;
 const int MOD = 1000000007;
 
 void solve() {
-  
+	
 }
 
 signed main() {
-  cin.tie(nullptr);
-  std::ios::sync_with_stdio(false);
+	cin.tie(nullptr);
+	std::ios::sync_with_stdio(false);
 
-  int T = 1;
-  // cin >> T;
-  while (T--) {
-    solve();
-  }
+	int T = 1;
+	// cin >> T;
+	while (T--) {
+		solve();
+	}
 
-  return 0;
+	return 0;
 }

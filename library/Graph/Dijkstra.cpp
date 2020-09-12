@@ -1,85 +1,36 @@
-a /*
-    author : Anand
-    Bellman Ford
+/*
+  author : Anand
 */
 
 #include <bits/stdc++.h>
 
-#define sz(a) int((a).size())
-#define ll long long
-#define si(x) scanf("%d", &x)
-#define sl(x) scanf("%lld", &x)
-#define ss(s) scanf("%s", s)
-#define pi(x) printf("%d\n", x)
-#define pl(x) printf("%lld\n", x)
-#define ps(s) printf("%s\n", s)
-#define pb push_back
-#define mp(a, b) make_pair(ll(a), ll(b))
-#define F first
-#define S second
-#define all(c) (c).begin(), (c).end()
-#define clr(x) memset(x, 0, sizeof(x))
-#define sortall(x) sort(all(x))
+using namespace std;
+
 #define PI 3.1415926535897932384626
-#define present(c, x) ((c).find(x) != (c).end())
-#define cpresent(c, x) (find(all(c), x) != (c).end())
+#define int long long
+#define ll long long
 
-    using namespace std;
+#ifndef ONLINE_JUDGE
+#define debug(...) cerr << "\t" << #__VA_ARGS__ << " : " << (__VA_ARGS__) << endl;
+#else
+#define debug(...) 42
+#endif
 
-typedef pair<int, int> pi;
-typedef pair<ll, ll> pl;
-typedef vector<int> vi;
-typedef vector<ll> vl;
-typedef vector<pi> vpi;
-typedef vector<pl> vpl;
-
-const int mod = 1000000007;
-const double zero = 10e-9;
+const int INF = 1e18 + 5;
+const int MOD = 1000000007;
 const int N = 3e5, M = N;
 
-int mpow(int base, int exp);
-void ipgraph(int n, int m);
-void dijkstra(int x, int n);
-
-vpi g[N];
+vector<pair<int, int>> g[N];
 int parent[N] = {-1};
 int dist[N];
 int DP[N];
-
-int main() {
-#ifndef ONLINE_JUDGE
-    freopen("main.inp", "r", stdin);
-    freopen("main.out", "w", stdout);
-#endif
-    ios_base::sync_with_stdio(false);
-    cin.tie(0);
-    int n, m;
-    cin >> n >> m;
-    ipgraph(n, m);
-    dijkstra(1, n);
-    for (int i = 1; i <= n; ++i) {
-        cout << i << " : " << dist[i] << '\n';
-    }
-    return 0;
-}
-
-int mpow(int base, int exp) {
-    base %= mod;
-    int result = 1;
-    while (exp > 0) {
-        if (exp & 1) result = ((ll)result * base) % mod;
-        base = ((ll)base * base) % mod;
-        exp >>= 1;
-    }
-    return result;
-}
 
 void ipgraph(int n, int m) {
     int i, u, v, w;
     while (m--) {
         cin >> u >> v >> w;
-        g[u].pb({v, w});
-        g[v].pb({u, w});  // undirected
+        g[u].push_back({v, w});
+        g[v].push_back({u, w});  // undirected
     }
 }
 
@@ -90,17 +41,17 @@ void dijkstra(int x, int n) {
         dist[i] = INT_MAX;
     }
 
-    priority_queue<pi> q;
+    priority_queue<pair<int, int>> q;
     q.push({0, x});
     dist[x] = 0;
 
     while (!q.empty()) {
-        int a = q.top().S;
+        int a = q.top().second;
         q.pop();
         if (processed[a]) continue;
         for (auto v : g[a]) {
-            int b = v.F;
-            int w = v.S;
+            int b = v.first;
+            int w = v.second;
             if (dist[a] != INT_MAX && w != INT_MAX && dist[b] > dist[a] + w) {
                 dist[b] = dist[a] + w;
                 parent[b] = a;
@@ -109,4 +60,18 @@ void dijkstra(int x, int n) {
         }
         processed[a] = true;
     }
+}
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+
+    int n, m;
+    cin >> n >> m;
+    ipgraph(n, m);
+    dijkstra(1, n);
+    for (int i = 1; i <= n; ++i) {
+        cout << i << " : " << dist[i] << '\n';
+    }
+    return 0;
 }
