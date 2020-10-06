@@ -14,7 +14,9 @@
           "-o",
           "${fileDirname}/${fileBasenameNoExtension}"
         ],
-        "problemMatcher": ["$gcc"],
+        "problemMatcher": [
+          "$gcc"
+        ]
       },
       {
         "type": "shell",
@@ -32,29 +34,37 @@
           "-o",
           "${fileDirname}/${fileBasenameNoExtension}"
         ],
-        "problemMatcher": ["$gcc"],
-        "group": {
-          "kind": "build",
-          "isDefault": true
-        }
+        "problemMatcher": [
+          "$gcc"
+        ],
+        "group": "build"
       },
       {
         "type": "shell",
         "label": "cd",
         "command": "cd",
-        "args": ["${fileDirname}"],
+        "args": [
+          "${fileDirname}"
+        ],
         "group": "none"
       },
       {
         "type": "shell",
         "label": "clear",
         "command": "rm",
-        "args": ["-rf", "main", "main.dSYM"],
+        "args": [
+          "-rf",
+          "main",
+          "main.dSYM"
+        ],
         "group": "none"
       },
       {
         "label": "cleanup",
-        "dependsOn": ["cd", "clear"]
+        "dependsOn": [
+          "cd",
+          "clear"
+        ]
       }
     ],
     "version": "2.0.0"
