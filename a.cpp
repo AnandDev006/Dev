@@ -20,7 +20,7 @@ const int INF = 1e18 + 5;
 const int MOD = 1000000007;
 
 void solve() {
-	cout << 1 << endl;    
+    
 }
 
 signed main() {
