@@ -33,6 +33,10 @@
         "${fileDirname}/${fileBasenameNoExtension}"
       ],
       "problemMatcher": ["$gcc"],
+      "presentation": {
+        "reveal": "silent",
+        "clear": true
+      },
       "group": {
         "kind": "build",
         "isDefault": true
