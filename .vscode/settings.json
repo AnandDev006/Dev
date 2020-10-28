@@ -72,6 +72,13 @@
         "algorithm": "cpp",
         "__node_handle": "cpp",
         "optional": "cpp",
-        "ios": "cpp"
+        "ios": "cpp",
+        "any": "cpp",
+        "*.tcc": "cpp",
+        "charconv": "cpp",
+        "codecvt": "cpp",
+        "cuchar": "cpp",
+        "iterator": "cpp",
+        "variant": "cpp"
     }
 }

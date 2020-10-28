@@ -18,14 +18,19 @@ using namespace std;
 
 const int INF = 1e18 + 5;
 const int MOD = 1000000007;
+const int N = 5e5;
+
+vector<int> a(N);
+vector<int> dp(N);
+int n;
 
 void solve() {
-    cout << 1 << endl;
+    
 }
 
 signed main() {
     cin.tie(nullptr);
-    std::ios::sync_with_stdio(false);
+    ios::sync_with_stdio(false);
 
     int T = 1;
     // cin >> T;
