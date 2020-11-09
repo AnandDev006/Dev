@@ -18,27 +18,31 @@ using namespace std;
 
 const int INF = 1e18 + 5;
 const int MOD = 1000000007;
+const int N = 1e7;
+const int K = 25;
 
-template <typename T>
-class BIT {
-    vector<T> tree;
+vector<int> a(N);
+vector<int> dp(N);
+int n;
+
+struct BIT {
+    vector<int> tree;
+    int treeLen;
     int p(int k) { return (k & (-k)); };
 
-   public:
-    BIT(const vector<T>& arr) {
-        int arrLen = sz(arr);
-        tree = vector<T>(arrLen + 1, 0);
-        for (int i = 0; i < arrLen; ++i) {
+    BIT(const vector<int>& arr) {
+        int treeLen = arr.size();
+        tree.assign(treeLen + 1, 0);
+        for (int i = 0; i < treeLen; ++i) {
             updateBIT(arr[i], i);
         }
     }
 
     void updateBIT(int val, int idx) {
         ++idx;
-        if (idx >= sz(tree)) return;
 
-        while (idx <= sz(tree)) {
-            (tree)[idx] += val;
+        while (idx <= treeLen) {
+            tree[idx] += val;
             idx += p(idx);
         }
     }
@@ -48,26 +52,35 @@ class BIT {
         updateBIT(r + 1, -val);
     }
 
-    T getBITSum(int idx) {
+    int getBITSum(int idx) {
         ++idx;
-        if (idx >= sz(tree)) idx = sz(tree) - 1;
 
-        T sum = 0;
+        int sum = 0;
         while (idx > 0) {
-            sum += (tree)[idx];
+            sum += tree[idx];
             idx -= p(idx);
         }
         return sum;
     }
 
-    T getBITSum(int l, int r) {
+    int getBITSum(int l, int r) {
         return getBITSum(r) - getBITSum(l - 1);
     }
 };
 
-signed main() {
-    cin.tie(nullptr);
-    std::ios::sync_with_stdio(false);
+void solve() {
+  
+}
 
-    return 0;
+signed main() {
+  cin.tie(nullptr);
+  ios::sync_with_stdio(false);
+
+  int T = 1;
+  // cin >> T;
+  while (T--) {
+    solve();
+  }
+
+  return 0;
 }

@@ -1,7 +1,7 @@
 {
   "tasks": [
     {
-      "type": "shell",
+      "type": "cppbuild",
       "label": "run",
       "command": "g++",
       "args": [
@@ -12,12 +12,12 @@
         "-Wno-unused-result",
         "${file}",
         "-o",
-        "${fileDirname}/${fileBasenameNoExtension}"
+        "${fileDirname}\\${fileBasenameNoExtension}"
       ],
       "problemMatcher": ["$gcc"]
     },
     {
-      "type": "shell",
+      "type": "cppbuild",
       "label": "g++ build",
       "command": "g++",
       "args": [
@@ -25,12 +25,10 @@
         "-Wshadow",
         "-g",
         "-Wall",
-        "-fsanitize=address",
-        "-fsanitize=undefined",
         "-D_GLIBCXX_DEBUG",
         "${file}",
         "-o",
-        "${fileDirname}/${fileBasenameNoExtension}"
+        "${fileDirname}\\${fileBasenameNoExtension}"
       ],
       "problemMatcher": ["$gcc"],
       "presentation": {

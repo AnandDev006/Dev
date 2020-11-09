@@ -105,7 +105,8 @@ const int MOD = 1000000007;
 
 const int INF = 1e18 + 5;
 const int MOD = 1000000007;
-const int N = 5e5;
+const int N = 1e7;
+const int K = 25;
 
 vector<int> a(N);
 vector<int> dp(N);

@@ -18,6 +18,12 @@ using namespace std;
 
 const int INF = 1e18 + 5;
 const int MOD = 1000000007;
+const int N = 1e7;
+const int K = 25;
+
+vector<int> a(N);
+vector<int> dp(N);
+int n;
 
 vector<pair<int, int>> parent;
 vector<int> rnk;
@@ -49,9 +55,19 @@ bool union_sets(int a, int b) {
     return false;
 }
 
+void solve() {
+    
+}
+
 signed main() {
     cin.tie(nullptr);
-    std::ios::sync_with_stdio(false);
+    ios::sync_with_stdio(false);
+
+    int T = 1;
+    // cin >> T;
+    while (T--) {
+        solve();
+    }
 
     return 0;
 }

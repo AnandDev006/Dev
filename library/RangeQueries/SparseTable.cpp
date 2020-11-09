@@ -18,12 +18,15 @@ using namespace std;
 
 const int INF = 1e18 + 5;
 const int MOD = 1000000007;
-const int MAXN = 1e3 + 5;
-int K = 25;
-int N;
+const int N = 1e7;
+const int K = 25;
 
-vector<vector<int>> st(MAXN, vector<int>(K + 1, 0));
-vector<int> LOG(MAXN + 1);
+vector<int> a(N);
+vector<int> dp(N);
+int n;
+
+vector<vector<int>> st(N, vector<int>(K + 1, 0));
+vector<int> LOG(N + 1);
 
 void precomputeRSQ(const vector<int> &array) {
     for (int i = 0; i < N; i++)
@@ -47,7 +50,7 @@ ll getRSQ(int L, int R) {
 
 void preComputeRMQ(const vector<int> &array) {
     LOG[1] = 0;
-    for (int i = 2; i <= MAXN; i++)
+    for (int i = 2; i <= N; i++)
         LOG[i] = LOG[i / 2] + 1;
 
     for (int i = 0; i < N; i++)
@@ -65,18 +68,19 @@ ll getRMQ(int L, int R) {
     return minimum;
 }
 
+void solve() {
+  
+}
 
 signed main() {
-    cin.tie(nullptr);
-    std::ios::sync_with_stdio(false);
+  cin.tie(nullptr);
+  ios::sync_with_stdio(false);
 
-    vector<int> inp({1, 2, 3, 4, 5, 6, 7, 8, 9});
-    N = inp.size();
-    K = log2(N) + 1;
+  int T = 1;
+  // cin >> T;
+  while (T--) {
+    solve();
+  }
 
-    // precomputeRSQ(inp);
-    preComputeRMQ(inp);
-    cout << getRMQ(2, 6) << endl;
-
-    return 0;
+  return 0;
 }
