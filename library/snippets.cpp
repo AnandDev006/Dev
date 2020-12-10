@@ -24,18 +24,6 @@ ll binExpMod(ll a, ll b, ll m) {
     return res;
 }
 
-ll GCD (ll a, ll b) {
-    while (b) {
-        a %= b;
-        swap(a, b);
-    }
-    return a;
-}
-
-ll LCM (ll a, ll b) {
-    return a / gcd(a, b) * b;
-}
-
 pair<ll, ll> fib (ll n) {
     if (n == 0)
         return {0, 1};

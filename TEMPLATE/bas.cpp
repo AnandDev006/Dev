@@ -21,10 +21,6 @@ const int MOD = 1000000007;
 const int N = 1e7;
 const int K = 25;
 
-vector<int> a(N);
-vector<int> dp(N);
-int n;
-
 void solve() {
   
 }

@@ -1,4 +1,12 @@
 {
+    "VECTOR EQUAL": {
+      "prefix": "cpve",
+      "body": [
+        "template<typename T>",
+        "bool isVectorEqual(vector<T> v1, vector<T> v2) { return v1 == v2; }",
+      ],
+      "description": "CPP Vector Equal"
+    },
     "CPP BASIC": {
       "prefix": "cp1",
       "body": [
@@ -24,10 +32,6 @@
         "const int MOD = 1000000007;",
         "const int N = 1e7;",
         "const int K = 25;",
-        "",
-        "vector<int> a(N);",
-        "vector<int> dp(N);",
-        "int n;",
         "",
         "void solve() {",
         "	${0}",
@@ -160,10 +164,6 @@
         "const int MOD = 1000000007;",
         "const int N = 1e7;",
         "const int K = 25;",
-        "",
-        "vector<int> a(N);",
-        "vector<int> dp(N);",
-        "int n;",
         "",
         "void solve() {",
         "	${0}",

@@ -35,24 +35,26 @@ void ipgraph(int n, int m) {
 }
 
 void dfs(int u, int par = -1) {
+    visited[u] = true;
+    parent[u] = par;
     for (int v : g[u]) {
-        if (v == par) continue;
-        visited[v] = true;
-        parent[v] = u;
+        if (visited[v]) continue;
         dfs(v, u);
     }
 }
 
-void bfs(int u) {
+void bfs(int s) {
     queue<int> Q;
-    Q.push(u);
+    Q.push(s);
+    visited[s] = true;
+    parent[s] = -1;
     while (!Q.empty()) {
-        int p = Q.front();
+        int u = Q.front();
         Q.pop();
-        for (int v : g[p]) {
-            if (v == p) continue;
+        for (int v : g[u]) {
+            if (visited[v]) continue;
             visited[v] = true;
-            parent[v] = p;
+            parent[v] = u;
             Q.push(v);
         }
     }

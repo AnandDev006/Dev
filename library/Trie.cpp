@@ -18,61 +18,113 @@ using namespace std;
 
 const int INF = 1e18 + 5;
 const int MOD = 1000000007;
-const int ALPHABET_SIZE = 26;
+const int N = 1e7;
+const int K = 25;
 
-struct TrieNode {
-    vector<TrieNode*> children;
-    bool isEndOfWord;
-    TrieNode() {
-        children = vector<TrieNode*>(ALPHABET_SIZE);
+const int SIZE = 26;
+
+class Trie {
+    class TrieNode {
+       public:
+        vector<TrieNode*> children;
+        bool isEndOfWord;
+        TrieNode() {
+            children = vector<TrieNode*>(SIZE, nullptr);
+            isEndOfWord = false;
+        }
+    };
+    TrieNode* root;
+    bool isLastNode(TrieNode* node) {
+        for (int i = 0; i < SIZE; ++i) {
+            if (node->children[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+    void suggestionsRec(TrieNode* node, string s) {
+        if (node->isEndOfWord) {
+            cout << s << "\n";
+        }
+        if (isLastNode(node)) {
+            return;
+        }
+
+        for (int i = 0; i < SIZE; ++i) {
+            if (node->children[i]) {
+                s.push_back('a' + i);
+                suggestionsRec(node->children[i], s);
+                s.pop_back();
+            }
+        }
+    }
+
+   public:
+    Trie() {
+        root = new TrieNode();
+    }
+
+    void addWord(string s) {
+        TrieNode* temp = root;
+        int len = s.size();
+        for (int i = 0; i < len; ++i) {
+            int idx = s[i] - 'a';
+            if (!temp->children[idx]) {
+                temp->children[idx] = new TrieNode();
+            }
+            temp = temp->children[idx];
+        }
+        temp->isEndOfWord = true;
+    }
+
+    bool search(string s) {
+        TrieNode* temp = root;
+        int len = s.size();
+        for (int i = 0; i < len; ++i) {
+            int idx = s[i] - 'a';
+            if (!temp->children[idx]) {
+                return false;
+            }
+            temp = temp->children[idx];
+        }
+        return temp->isEndOfWord;
+    }
+
+    void printAutoSuggestions(string s) {
+        TrieNode* temp = root;
+        int len = s.size();
+        for (int i = 0; i < len; ++i) {
+            int idx = s[i] - 'a';
+            if (!temp->children[idx]) {
+                cout << "No string found with this prefix\n";
+                return;
+            }
+            temp = temp->children[idx];
+        }
+        bool isLast = isLastNode(temp);
+        if (temp->isEndOfWord && isLast) {
+            cout << s << "\n";
+            cout << "No other strings found with this prefix\n";
+            return;
+        }
+        if (!isLast) {
+            suggestionsRec(temp, s);
+        }
     }
 };
 
-TrieNode* getNode(void) {
-    struct TrieNode *pNode =  new TrieNode;
-
-    pNode->isEndOfWord = false;
-
-    for (int i = 0; i < ALPHABET_SIZE; i++)
-        pNode->children[i] = NULL;
-
-    return pNode;
-}
-
-void insert(struct TrieNode *root, string key) {
-    TrieNode *cur = root;
-
-    for (int i = 0; i < (int)key.length(); i++) {
-        int index = key[i] - 'a';
-        if (!cur->children[index])
-            cur->children[index] = getNode();
-
-        cur = cur->children[index];
-    }
-
-    // mark last node as leaf
-    cur->isEndOfWord = true;
-}
-
-bool search(struct TrieNode *root, string key) {
-    struct TrieNode *cur = root;
-
-    for (int i = 0; i < (int)key.length(); i++) {
-        int index = key[i] - 'a';
-        if (!cur->children[index])
-            return false;
-
-        cur = cur->children[index];
-    }
-
-    return (cur != NULL && cur->isEndOfWord);
+void solve() {
 }
 
 signed main() {
     cin.tie(nullptr);
-    std::ios::sync_with_stdio(false);
+    ios::sync_with_stdio(false);
 
-
+    int T = 1;
+    // cin >> T;
+    while (T--) {
+        solve();
+    }
 
     return 0;
 }
