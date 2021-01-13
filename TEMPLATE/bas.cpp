@@ -21,7 +21,7 @@ const int MOD = 1000000007;
 const int N = 1e7;
 const int K = 25;
 
-void solve() {
+void solve(int tc = 1) {
   
 }
 
@@ -29,11 +29,9 @@ signed main() {
   cin.tie(nullptr);
   ios::sync_with_stdio(false);
 
-  int T = 1;
-  // cin >> T;
-  while (T--) {
-    solve();
-  }
+  int tc = 1;
+  cin >> tc;
+  for (int t = 1; t <= tc; ++t) solve(t);
 
   return 0;
 }

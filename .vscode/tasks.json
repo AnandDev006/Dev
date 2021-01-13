@@ -34,7 +34,6 @@
       ],
       "problemMatcher": ["$gcc"],
       "presentation": {
-        "reveal": "silent",
         "clear": true
       },
       "group": {

@@ -21,110 +21,19 @@ const int MOD = 1000000007;
 const int N = 1e7;
 const int K = 25;
 
-const int SIZE = 26;
+template <typename T>
+bool isVectorEqual(vector<T> v1, vector<T> v2) { return v1 == v2; }
 
-class Trie {
-    class TrieNode {
-       public:
-        vector<TrieNode*> children;
-        bool isEndOfWord;
-        TrieNode() {
-            children = vector<TrieNode*>(SIZE, nullptr);
-            isEndOfWord = false;
-        }
-    };
-    TrieNode* root;
-    bool isLastNode(TrieNode* node) {
-        for (int i = 0; i < SIZE; ++i) {
-            if (node->children[i]) {
-                return false;
-            }
-        }
-        return true;
-    }
-    void suggestionsRec(TrieNode* node, string s) {
-        if (node->isEndOfWord) {
-            cout << s << "\n";
-        }
-        if (isLastNode(node)) {
-            return;
-        }
-
-        for (int i = 0; i < SIZE; ++i) {
-            if (node->children[i]) {
-                s.push_back('a' + i);
-                suggestionsRec(node->children[i], s);
-                s.pop_back();
-            }
-        }
-    }
-
-   public:
-    Trie() {
-        root = new TrieNode();
-    }
-
-    void addWord(string s) {
-        TrieNode* temp = root;
-        int len = s.size();
-        for (int i = 0; i < len; ++i) {
-            int idx = s[i] - 'a';
-            if (!temp->children[idx]) {
-                temp->children[idx] = new TrieNode();
-            }
-            temp = temp->children[idx];
-        }
-        temp->isEndOfWord = true;
-    }
-
-    bool search(string s) {
-        TrieNode* temp = root;
-        int len = s.size();
-        for (int i = 0; i < len; ++i) {
-            int idx = s[i] - 'a';
-            if (!temp->children[idx]) {
-                return false;
-            }
-            temp = temp->children[idx];
-        }
-        return temp->isEndOfWord;
-    }
-
-    void printAutoSuggestions(string s) {
-        TrieNode* temp = root;
-        int len = s.size();
-        for (int i = 0; i < len; ++i) {
-            int idx = s[i] - 'a';
-            if (!temp->children[idx]) {
-                cout << "No string found with this prefix\n";
-                return;
-            }
-            temp = temp->children[idx];
-        }
-        bool isLast = isLastNode(temp);
-        if (temp->isEndOfWord && isLast) {
-            cout << s << "\n";
-            cout << "No other strings found with this prefix\n";
-            return;
-        }
-        if (!isLast) {
-            suggestionsRec(temp, s);
-        }
-    }
-};
-
-void solve() {
+void solve(int tc = 1) {
 }
 
 signed main() {
-    cin.tie(nullptr);
-    ios::sync_with_stdio(false);
+  cin.tie(nullptr);
+  ios::sync_with_stdio(false);
 
-    int T = 1;
-    // cin >> T;
-    while (T--) {
-        solve();
-    }
+  int tc = 1;
+  cin >> tc;
+  for (int t = 1; t <= tc; ++t) solve(t);
 
-    return 0;
+  return 0;
 }
