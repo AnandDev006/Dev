@@ -43,6 +43,7 @@ const int N = 1e7;
 const int K = 25;
 
 void solve(int tc = 1) {
+  
 }
 
 signed main() {
