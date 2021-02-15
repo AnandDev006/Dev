@@ -93,9 +93,9 @@ void debug_out(Head H, Tail... T) {
 }
 
 #ifndef ONLINE_JUDGE
-#define debug(...) cerr << "\t[" << #__VA_ARGS__ << "]:", debug_out(__VA_ARGS__)
+#define dbg(...) cerr << "\t[" << #__VA_ARGS__ << "]:", debug_out(__VA_ARGS__)
 #else
-#define debug(...) 42
+#define dbg(...) 42
 #endif
 
 const int INF = 1e18 + 5;
