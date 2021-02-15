@@ -31,7 +31,7 @@ struct BIT {
     int p(int k) { return (k & (-k)); };
 
     BIT(const vector<int>& arr) {
-        int treeLen = arr.size();
+        treeLen = arr.size();
         tree.assign(treeLen + 1, 0);
         for (int i = 0; i < treeLen; ++i) {
             updateBIT(arr[i], i);
@@ -41,7 +41,7 @@ struct BIT {
     void updateBIT(int val, int idx) {
         ++idx;
 
-        while (idx <= treeLen) {
+        while (idx < treeLen) {
             tree[idx] += val;
             idx += p(idx);
         }

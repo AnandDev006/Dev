@@ -32,7 +32,7 @@ void dbg_out(Head H, Tail... T) {
 #ifndef ONLINE_JUDGE
 #define dbg(...) cerr << "(" << #__VA_ARGS__ << "):", dbg_out(__VA_ARGS__)
 #else
-#define debug(...) 42
+#define dbg(...) 42
 #endif
 
 /* </DEBUG> */
