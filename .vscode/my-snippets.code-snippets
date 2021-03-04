@@ -55,7 +55,7 @@
       "  return 0;",
       "}"
     ],
-    "description": "CPP BASIC"
+    "description": "CPP NO TC"
   },
   "CPP ADVANCED": {
     "prefix": "cp2",
@@ -91,7 +91,7 @@
       "  return 0;",
       "}"
     ],
-    "description": "CPP ADVANCED"
+    "description": "CPP TC"
   },
   "Debug Basic": {
     "prefix": "dbg1",

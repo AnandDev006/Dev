@@ -1,0 +1,10 @@
+<snippet>
+  <content><![CDATA[
+template <typename T>
+bool isVectorEqual(vector<T> v1, vector<T> v2) { return v1 == v2; }
+]]></content>
+  <tabTrigger>cpve</tabTrigger>
+  <description>VECTOR EQUAL</description>
+  <!-- Optional: Set a scope to limit where the snippet will trigger -->
+  <!-- <scope >source.python</scope > -->
+</snippet>
