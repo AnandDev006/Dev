@@ -101,15 +101,8 @@ class Trie {
             }
             temp = temp->children[idx];
         }
-        bool isLast = isLastNode(temp);
-        if (temp->isEndOfWord && isLast) {
-            cout << s << "\n";
-            cout << "No other strings found with this prefix\n";
-            return;
-        }
-        if (!isLast) {
-            suggestionsRec(temp, s);
-        }
+        suggestionsRec(temp, s);
+        
     }
 };
 
