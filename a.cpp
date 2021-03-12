@@ -6,6 +6,8 @@
 
 using namespace std;
 
+#define ll long long
+
 void solve(int tc = 1) {
   
 }

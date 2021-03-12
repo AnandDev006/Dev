@@ -6,6 +6,8 @@
 
 using namespace std;
 
+#define ll long long
+
 void solve(int tc = 1) {
   
 }
@@ -15,7 +17,7 @@ signed main() {
   ios::sync_with_stdio(false);
 
   int tc = 1;
-  cin >> tc;
+  // cin >> tc;
   for (int t = 1; t <= tc; ++t) solve(t);
 
   return 0;
