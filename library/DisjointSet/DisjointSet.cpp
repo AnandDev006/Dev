@@ -1,73 +1,34 @@
-/*
-  author : Anand
-*/
+struct DisjointSet {
+    vector<long long> parent;
+    vector<long long > rnk;
 
-#include <bits/stdc++.h>
-
-using namespace std;
-
-#define PI 3.1415926535897932384626
-#define int long long
-#define ll long long
-
-#ifndef ONLINE_JUDGE
-#define debug(...) cerr << "\t" << #__VA_ARGS__ << " : " << (__VA_ARGS__) << endl;
-#else
-#define debug(...) 42
-#endif
-
-const int INF = 1e18 + 5;
-const int MOD = 1000000007;
-const int N = 1e7;
-const int K = 25;
-
-vector<int> a(N);
-vector<int> dp(N);
-int n;
-
-vector<pair<int, int>> parent;
-vector<int> rnk;
-
-void makeSet(int v) {
-    parent[v] = {v, 0};
-    rnk[v] = 0;
-}
-
-pair<int, int> find_set(int v) {
-    if (v != parent[v].first) {
-        int len = parent[v].second;
-        parent[v] = find_set(parent[v].first);
-        parent[v].second += len;
+    DisjointSet(long long n) : parent(n), rnk(n) {
+        for (long long i = 0 ; i < n ; ++i)
+            makeSet(i);
     }
-    return parent[v];
-}
 
-bool union_sets(int a, int b) {
-    a = find_set(a).first;
-    b = find_set(b).first;
-    if (a != b) {
-        if (rnk[a] < rnk[b])
-            swap(a, b);
-        parent[b] = {a, 1};
-        if (rnk[a] == rnk[b]) rnk[a]++;
+    void makeSet(long long v) {
+        parent[v] = v;
+        rnk[v] = 0;
+    }
+
+    long long findSet(long long v) {
+        if (v == parent[v]) return v;
+        return parent[v] = findSet(parent[v]);
+    }
+
+    bool unionSet(long long x, long long y) {
+        x = findSet(x);
+        y = findSet(y);
+
+        if (x == y) return false;
+
+        if (rnk[x] < rnk[y])
+            swap(x, y);
+        parent[y] = x;
+        if (rnk[x] == rnk[y])
+            ++rnk[x];
+
         return true;
     }
-    return false;
-}
-
-void solve() {
-    
-}
-
-signed main() {
-    cin.tie(nullptr);
-    ios::sync_with_stdio(false);
-
-    int T = 1;
-    // cin >> T;
-    while (T--) {
-        solve();
-    }
-
-    return 0;
-}
+};
