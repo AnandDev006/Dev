@@ -35,10 +35,10 @@ void ipgraph(int n, int m) {
 }
 
 void dfs(int u, int par = -1) {
+    if (visited[u]) return;
     visited[u] = true;
     parent[u] = par;
     for (int v : g[u]) {
-        if (visited[v]) continue;
         dfs(v, u);
     }
 }

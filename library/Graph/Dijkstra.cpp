@@ -49,6 +49,7 @@ void dijkstra(int x, int n) {
         int a = q.top().second;
         q.pop();
         if (processed[a]) continue;
+        processed[a] = true;
         for (auto v : g[a]) {
             int b = v.first;
             int w = v.second;
@@ -58,7 +59,6 @@ void dijkstra(int x, int n) {
                 q.push({-dist[b], b});
             }
         }
-        processed[a] = true;
     }
 }
 
