@@ -18,5 +18,7 @@
   "diffEditor.ignoreTrimWhitespace": false,
   "io-run.diffIgnoreSpaces": true,
   "io-run.showErrorOutputOnFails": true,
-  "editor.tabSize": 2
+  "editor.tabSize": 2,
+  "git.autofetch": true,
+  "window.zoomLevel": 1
 }

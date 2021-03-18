@@ -34,7 +34,8 @@
       ],
       "problemMatcher": ["$gcc"],
       "presentation": {
-        "clear": true
+        "clear": true,
+        "reveal": "always"
       },
       "group": {
         "kind": "build",
