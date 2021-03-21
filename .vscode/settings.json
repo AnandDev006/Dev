@@ -20,5 +20,10 @@
   "io-run.showErrorOutputOnFails": true,
   "editor.tabSize": 2,
   "git.autofetch": true,
-  "window.zoomLevel": 1
+  "window.zoomLevel": 1,
+  "files.associations": {
+    "deque": "cpp",
+    "string": "cpp",
+    "vector": "cpp"
+  }
 }
