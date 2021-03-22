@@ -21,7 +21,7 @@ function ccp_fast() {
 
 function dbg() {
   
-  ccp $1
+  ccp ${1-"a.cpp"}
 
   STARTCOLOR="\e[96m";
   ENDCOLOR="\e[0m";
@@ -38,7 +38,7 @@ function dbg() {
 
 function test() {
  
-  ccp $1 
+  ccp ${1-"a.cpp"}
  
   ./a < a.01.inp
   
