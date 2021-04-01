@@ -43,3 +43,7 @@ function test() {
   ./a < a.01.inp
   
 }
+
+function pubip() {
+  curl https://icanhazip.com/ --silent | tr -d '[:space:]' | pbcopy
+}
