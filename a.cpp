@@ -9,9 +9,7 @@ using namespace std;
 #define ll long long
 
 void solve(int tc = 1) {
-  int x, y;
-  cin >> x;
-  cout << 2 * x << endl;
+  
 }
 
 signed main() {
