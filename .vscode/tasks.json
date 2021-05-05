@@ -1,7 +1,7 @@
 {
   "tasks": [
     {
-      "type": "cppbuild",
+      "type": "process",
       "label": "run",
       "command": "g++",
       "args": [
@@ -17,7 +17,7 @@
       "problemMatcher": ["$gcc"]
     },
     {
-      "type": "cppbuild",
+      "type": "process",
       "label": "g++ build",
       "command": "g++",
       "args": [
