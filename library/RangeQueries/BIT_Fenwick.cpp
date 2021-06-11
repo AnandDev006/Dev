@@ -12,7 +12,7 @@ struct FenwickTree {
 
   void add(long long val, long long idx) {
     assert(0 <= idx && idx < n - 1);
-    for (++idx : idx < n ; idx += (idx & -idx)) {
+    for (++idx ; idx < n ; idx += (idx & -idx)) {
       bit[idx] += val;
     }
   }

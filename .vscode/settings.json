@@ -21,4 +21,11 @@
   "editor.tabSize": 2,
   "git.autofetch": true,
   "window.zoomLevel": 1,
+  "files.associations": {
+    "iterator": "cpp",
+    "iostream": "cpp",
+    "bitset": "cpp",
+    "ratio": "cpp",
+    "vector": "cpp"
+  },
 }
