@@ -2,14 +2,15 @@
   author : Anand
 */
 
-#include <bits/stdc++.h>
+#include <iostream>
 
 using namespace std;
 
 #define ll long long
 
 void solve(int tc = 1) {
-  
+  cout << 1 << endl;
+  return;
 }
 
 signed main() {
