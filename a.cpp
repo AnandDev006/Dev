@@ -2,7 +2,7 @@
   author : Anand
 */
 
-#include <iostream>
+#include <bits/stdc++.h>
 
 using namespace std;
 
@@ -10,7 +10,6 @@ using namespace std;
 
 void solve(int tc = 1) {
   cout << 1 << endl;
-  return;
 }
 
 signed main() {
